@@ -9,8 +9,8 @@ export const metadata = {
   description: "Selected Sansico programmes with the numbers that matter: FSC rattan with NEST and Target, Mattel toy packaging at Printec, and four decades of US retail seasonal programmes."
 };
 
-export default function Work() {
-  const w = getWork();
+export default async function Work() {
+  const w = await getWork();
   return (
     <>
       <Reveal />

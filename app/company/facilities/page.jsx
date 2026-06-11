@@ -8,10 +8,10 @@ export const metadata = {
   description: "Sansico Group facilities across Java, Jakarta, Tangerang, Cikarang, Yogyakarta and Foshan — with full addresses and production focus."
 };
 
-export default function Facilities() {
-  const caps = getCapabilities();
-  const loc = getLocations();
-  const site = getSite();
+export default async function Facilities() {
+  const caps = await getCapabilities();
+  const loc = await getLocations();
+  const site = await getSite();
   const focusByName = Object.fromEntries(caps.facilities.map((f) => [f.name, f.focus]));
   return (
     <>

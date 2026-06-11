@@ -9,8 +9,8 @@ export const metadata = {
   description: "Sansico Group's story: vision, culture, history and innovation across ten facilities in Indonesia and China."
 };
 
-export default function Company() {
-  const c = getCompany();
+export default async function Company() {
+  const c = await getCompany();
   return (
     <>
       <Reveal />

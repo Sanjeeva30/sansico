@@ -8,8 +8,8 @@ export const metadata = {
   description: "Careers across Sansico's ten facilities in Indonesia and China. Register your interest and we'll reach out when a matching role opens."
 };
 
-export default function Careers() {
-  const c = getCareers();
+export default async function Careers() {
+  const c = await getCareers();
   return (
     <>
       <Reveal />

@@ -9,8 +9,8 @@ export const metadata = {
   description: "Sansico serves five markets from Indonesia: toys & games, greeting cards & stationery, gifting & seasonal, home & lifestyle, and FMCG & retail packaging."
 };
 
-export default function Markets() {
-  const m = getMarkets();
+export default async function Markets() {
+  const m = await getMarkets();
   return (
     <>
       <Reveal />

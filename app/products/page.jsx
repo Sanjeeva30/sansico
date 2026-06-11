@@ -9,8 +9,8 @@ export const metadata = {
   description: "Five product families developed to customer specification: paper products, box & rigid packaging, circular design, handicrafts and cut & sew."
 };
 
-export default function Products() {
-  const p = getProducts();
+export default async function Products() {
+  const p = await getProducts();
   return (
     <>
       <Reveal />

@@ -8,9 +8,9 @@ export const metadata = {
   description: "Start a conversation with Sansico Group: request a quotation, email sales@sansico.com, or call our Jakarta and Foshan marketing offices."
 };
 
-export default function Contact() {
-  const site = getSite();
-  const products = getProducts();
+export default async function Contact() {
+  const site = await getSite();
+  const products = await getProducts();
   return (
     <>
       <Reveal />

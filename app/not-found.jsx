@@ -1,7 +1,7 @@
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 
-export default function NotFound() {
+export default async function NotFound() {
   return (
     <>
       <PageHero kicker="404" title="This page slipped off the press" intro="The address you opened doesn't exist on the new site." />

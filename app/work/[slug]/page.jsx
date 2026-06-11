@@ -4,17 +4,17 @@ import Reveal from "@/components/Reveal";
 import { getWork, getCase } from "@/lib/content";
 import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
-  return getWork().items.map((w) => ({ slug: w.slug }));
+export async function generateStaticParams() {
+  const d = await getWork(); return d.items.map((w) => ({ slug: w.slug }));
 }
-export function generateMetadata({ params }) {
-  const c = getCase(params.slug);
+export async function generateMetadata({ params }) {
+  const c = await getCase(params.slug);
   if (!c) return {};
   return { title: `${c.title} — Case Study`, description: c.quote };
 }
 
-export default function CasePage({ params }) {
-  const c = getCase(params.slug);
+export default async function CasePage({ params }) {
+  const c = await getCase(params.slug);
   if (!c) notFound();
   return (
     <>

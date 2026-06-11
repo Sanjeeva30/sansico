@@ -11,8 +11,8 @@ export const metadata = {
 
 const badgeColor = { Forestry: "green", "Food Safety": "green", Environmental: "green", "Quality & Testing": "navy", "Supply Chain Security": "navy", Social: "crimson" };
 
-export default function Sustainability() {
-  const s = getSustainability();
+export default async function Sustainability() {
+  const s = await getSustainability();
   return (
     <>
       <Reveal />

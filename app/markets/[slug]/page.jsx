@@ -5,17 +5,17 @@ import Reveal from "@/components/Reveal";
 import { getMarkets, getMarket } from "@/lib/content";
 import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
-  return getMarkets().items.map((m) => ({ slug: m.slug }));
+export async function generateStaticParams() {
+  const d = await getMarkets(); return d.items.map((m) => ({ slug: m.slug }));
 }
-export function generateMetadata({ params }) {
-  const m = getMarket(params.slug);
+export async function generateMetadata({ params }) {
+  const m = await getMarket(params.slug);
   if (!m) return {};
   return { title: `${m.title} — Manufacturing from Indonesia`, description: m.body.slice(0, 155) };
 }
 
-export default function MarketPage({ params }) {
-  const m = getMarket(params.slug);
+export default async function MarketPage({ params }) {
+  const m = await getMarket(params.slug);
   if (!m) notFound();
   return (
     <>

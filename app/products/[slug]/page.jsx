@@ -6,17 +6,17 @@ import Arrow from "@/components/Arrow";
 import { getProducts, getProduct } from "@/lib/content";
 import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
-  return getProducts().items.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const d = await getProducts(); return d.items.map((p) => ({ slug: p.slug }));
 }
-export function generateMetadata({ params }) {
-  const p = getProduct(params.slug);
+export async function generateMetadata({ params }) {
+  const p = await getProduct(params.slug);
   if (!p) return {};
   return { title: `${p.title} — Made in Indonesia to Specification`, description: p.body.slice(0, 155) };
 }
 
-export default function ProductPage({ params }) {
-  const p = getProduct(params.slug);
+export default async function ProductPage({ params }) {
+  const p = await getProduct(params.slug);
   if (!p) notFound();
   return (
     <>

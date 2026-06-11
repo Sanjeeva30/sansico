@@ -12,8 +12,8 @@ export const metadata = {
 const marks = ["PP","PP","GCP","FS","IGP","IGP","IGP","IGP","IGP","SU"];
 const colors = ["#22409E","#22409E","#0D4F31","#9C1F36","#7A0D20","#7A0D20","#7A0D20","#7A0D20","#7A0D20","#17120F"];
 
-export default function Capabilities() {
-  const caps = getCapabilities();
+export default async function Capabilities() {
+  const caps = await getCapabilities();
   return (
     <>
       <Reveal />

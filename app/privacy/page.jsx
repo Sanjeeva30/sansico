@@ -2,7 +2,7 @@ import PageHero from "@/components/PageHero";
 
 export const metadata = { title: "Privacy", description: "Sansico Group website privacy notice." };
 
-export default function Privacy() {
+export default async function Privacy() {
   return (
     <>
       <PageHero kicker="Legal" title="Privacy notice" />

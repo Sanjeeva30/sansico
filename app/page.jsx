@@ -7,11 +7,11 @@ import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import { getHome, getCapabilities, getMarkets, getCase } from "@/lib/content";
 
-export default function Home() {
-  const home = getHome();
-  const caps = getCapabilities();
-  const markets = getMarkets();
-  const featured = getCase(home.featuredWork);
+export default async function Home() {
+  const home = await getHome();
+  const caps = await getCapabilities();
+  const markets = await getMarkets();
+  const featured = await getCase(home.featuredWork);
   const [m1, m2, m3] = home.manifesto.title.split("|");
   const arts = ["art-design", "art-make", "art-deliver"];
 
