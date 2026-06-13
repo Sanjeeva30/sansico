@@ -89,7 +89,7 @@ export default async function Home() {
           <div className="market-grid">
             {markets.items.map((m) => (
               <Link className="market" href={`/markets/${m.slug}`} key={m.slug}>
-                <span className={`dot dot-${m.color}`} aria-hidden="true" />
+                <span style={{ display:"block", width:10, height:10, borderRadius:"50%", background: m.colorHex || "var(--crimson)", marginBottom:16 }} aria-hidden="true" />
                 <h3>{m.title}</h3>
                 <p>{m.tag}</p>
               </Link>
