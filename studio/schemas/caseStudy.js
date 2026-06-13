@@ -1,29 +1,32 @@
+import { orderRankField, orderRankOrdering } from "@sanity/orderable-document-list";
+
 export default {
   name: "caseStudy", title: "Case Studies", type: "document",
+  orderings: [orderRankOrdering],
   fields: [
+    orderRankField({ type: "caseStudy" }),
+    { name: "visible",     title: "Visible on site",    type: "boolean", initialValue: true },
     { name: "title",       type: "string" },
     { name: "slug",        type: "slug", options: { source: "title" } },
     { name: "kicker",      title: "Kicker (customer / programme)", type: "string" },
     { name: "clientLogo",  title: "Client logo (transparent PNG/SVG)", type: "image",
       options: { accept: "image/svg+xml,image/png,image/webp" } },
-    { name: "externalUrl", title: "External link (optional)",  type: "url",
-      description: "Link to client website, press article, or product page. Opens in new tab." },
+    { name: "externalUrl", title: "External link (optional)", type: "url",
+      description: "Links to client website or press article — opens in new tab." },
     { name: "quote",       title: "Pull quote",   type: "text" },
     { name: "body",        title: "Body",         type: "text" },
-    {
-      name: "stats", type: "array",
+    { name: "stats", type: "array",
       of: [{ type: "object", fields: [
-        { name: "value", type: "string" },
-        { name: "label", type: "string" }
+        { name: "value", type: "string" }, { name: "label", type: "string" }
       ], preview: { select: { title: "value", subtitle: "label" } } }]
     },
     { name: "image",       title: "Hero image",   type: "image" },
-    { name: "publishedAt", title: "Published",    type: "datetime" }
+    { name: "publishedAt", title: "Published",    type: "datetime" },
   ],
   preview: {
-    select: { title: "title", subtitle: "kicker", media: "clientLogo" },
-    prepare({ title, subtitle, media }) {
-      return { title, subtitle, media };
+    select: { title: "title", subtitle: "kicker", media: "clientLogo", visible: "visible" },
+    prepare({ title, subtitle, media, visible }) {
+      return { title, subtitle: `${subtitle || ""} ${visible === false ? "· 🔴 Hidden" : ""}`, media };
     }
   }
 };

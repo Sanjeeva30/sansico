@@ -1,8 +1,9 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import { schemaTypes } from "./schemas";
 
-const structure = (S) =>
+const structure = (S, context) =>
   S.list()
     .title("Sansico Studio")
     .items([
@@ -13,21 +14,21 @@ const structure = (S) =>
       S.divider(),
       S.listItem().title("🏠  Home Page")
         .child(S.document().schemaType("homePage").documentId("homePage").title("Home Page")),
-      S.documentTypeListItem("capability").title("Capabilities"),
-      S.documentTypeListItem("market").title("Markets"),
+      orderableDocumentListDeskItem({ type: "capability",      title: "Capabilities",      S, context }),
+      orderableDocumentListDeskItem({ type: "market",          title: "Markets",            S, context }),
       S.listItem().title("📦  Products")
         .child(S.list().title("Products").items([
-          S.documentTypeListItem("productCategory").title("Categories"),
-          S.documentTypeListItem("productItem").title("Products"),
+          orderableDocumentListDeskItem({ type: "productCategory", title: "Categories", S, context }),
+          orderableDocumentListDeskItem({ type: "productItem",     title: "Products",   S, context }),
         ])),
-      S.documentTypeListItem("caseStudy").title("Case Studies"),
-      S.documentTypeListItem("certification").title("Certifications"),
-      S.documentTypeListItem("facility").title("Facilities"),
+      orderableDocumentListDeskItem({ type: "caseStudy",       title: "Case Studies",       S, context }),
+      orderableDocumentListDeskItem({ type: "certification",   title: "Certifications",     S, context }),
+      orderableDocumentListDeskItem({ type: "facility",        title: "Facilities",         S, context }),
       S.listItem().title("Careers Page")
         .child(S.document().schemaType("careersPage").documentId("careersPage").title("Careers Page")),
       S.divider(),
-      S.documentTypeListItem("person").title("Team"),
-      S.documentTypeListItem("newsPost").title("News & Press"),
+      orderableDocumentListDeskItem({ type: "person",          title: "Team",               S, context }),
+      orderableDocumentListDeskItem({ type: "newsPost",        title: "News & Press",       S, context }),
     ]);
 
 export default defineConfig({
