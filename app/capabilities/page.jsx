@@ -6,28 +6,19 @@ import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import Strip from "@/components/Strip";
 import { getCapabilities, getPageSettings, getPageSeo } from "@/lib/content";
+import RichText from "@/components/RichText";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata() {
   return getPageSeo("capabilities", {
-    title: "Capabilities — Design, Manufacturing & Vendor Operations",
+    title: "Capabilities — Design, Make, Deliver | Sansico Group",
     description: "Design & creative studio, ten-facility manufacturing with an in-house ISO 17025 laboratory, and door-to-door vendor operations from sourcing to trade compliance."
   });
 }
 
-function RichBlocks({ blocks }) {
-  if (!blocks?.length) return null;
-  return blocks.map((b, i) => {
-    const text = b.children?.map(c => c.text).join("") || "";
-    if (b.style === "h2") return <h2 key={i}>{text}</h2>;
-    if (b.style === "h3") return <h3 key={i}>{text}</h3>;
-    if (b.style === "blockquote") return <blockquote key={i}>{text}</blockquote>;
-    return <p key={i}>{text}</p>;
-  });
-}
-
-const marks  = ["PP","PP","GCP","FS","IGP","IGP","IGP","IGP","IGP","SU"];
-const colors = ["#22409E","#22409E","#0D4F31","#9C1F36","#7A0D20","#7A0D20","#7A0D20","#7A0D20","#7A0D20","#17120F"];
+// Fallback abbreviations and colours for facility badges
+const FAC_MARKS  = ["PP","PP","GCP","GCP","FS","IGP","IGP","IGP","IGP","IGP","SU"];
+const FAC_COLORS = ["#22409E","#22409E","#0D4F31","#0D4F31","#9C1F36","#7A0D20","#7A0D20","#7A0D20","#7A0D20","#7A0D20","#17120F"];
 
 export default async function Capabilities() {
   const [caps, settings] = await Promise.all([getCapabilities(), getPageSettings("capabilities")]);
@@ -39,27 +30,25 @@ export default async function Capabilities() {
       <PageHero kicker="Capabilities" title={caps.title} intro={caps.intro} />
 
       {caps.groups.map((g, i) => (
-        <section
-          key={g.slug}
-          id={g.slug}
-          className={`sec ${i % 2 ? "warm" : ""}`}
-          style={g.colorHex ? { background: g.colorHex, color: "#fff" } : undefined}
-        >
+        <section key={g.slug} id={g.slug} className={`sec ${i % 2 ? "warm" : ""}`}>
           <div className="wrap rv">
-            {/* Hero image */}
-            {g.imageUrl && (
-              <Image src={g.imageUrl} alt={g.title} width={120} height={420} style={{ objectFit: "contain" }} />
-            )}
 
-            <div className="split">
+            {/* ── Strip + full-width heading ── */}
+            <div style={{ marginBottom: 48 }}>
+              <Strip style={{ marginBottom: 20 }} />
+              <p className="kicker" style={{ marginBottom: 8 }}>{g.num}</p>
+              <h2 style={{ margin: 0, fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)" }}>{g.title}</h2>
+            </div>
+
+            {/* ── Two-column: body LEFT, bullets RIGHT ── */}
+            <div className="split" style={{ alignItems: "start" }}>
+
+              {/* LEFT — body text */}
               <div className="prose">
-                <p className="kicker">{g.num}</p>
-                <h2>{g.title}</h2>
                 {g.richBody?.length
-                  ? <RichBlocks blocks={g.richBody} />
+                  ? <RichText blocks={g.richBody} />
                   : <p>{g.body}</p>
                 }
-                {/* Proof points */}
                 {g.proofPoints?.length > 0 && (
                   <div className="stats-row" style={{ marginTop: 32 }}>
                     {g.proofPoints.map((pt) => (
@@ -71,16 +60,17 @@ export default async function Capabilities() {
                 )}
               </div>
 
+              {/* RIGHT — bullet points + sub-services */}
               <div>
-                {/* Bullet points — no Strip above so they align with text */}
                 {g.points?.length > 0 && (
                   <ul className="points">
-                    {g.points.map((pt) => <li key={pt}>{pt}</li>)}
+                    {g.points.map((pt) => (
+                      <li key={pt} style={{ color: "var(--ink)" }}>{pt}</li>
+                    ))}
                   </ul>
                 )}
-                {/* Sub-services */}
                 {g.subServices?.length > 0 && (
-                  <div style={{ marginTop: 28 }}>
+                  <div style={{ marginTop: g.points?.length ? 32 : 0 }}>
                     <p className="kicker" style={{ marginBottom: 14 }}>Services</p>
                     {g.subServices.map((s) => (
                       <div key={s.title} style={{ marginBottom: 16 }}>
@@ -90,36 +80,29 @@ export default async function Capabilities() {
                     ))}
                   </div>
                 )}
+                {g.customerLogos?.length > 0 && (
+                  <div style={{ marginTop: 32 }}>
+                    <p className="kicker" style={{ marginBottom: 16 }}>Used by</p>
+                    <div className="logo-wall">
+                      {g.customerLogos.map((cl) => cl.logoUrl && (
+                        <Image key={cl.name} src={cl.logoUrl} alt={cl.name}
+                          width={80} height={28} style={{ objectFit:"contain", filter:"grayscale(1)", opacity:0.6 }} />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Customer logos */}
-            {g.customerLogos?.length > 0 && (
-              <div style={{ marginTop: 40 }}>
-                <p className="kicker" style={{ marginBottom: 16 }}>Used by</p>
-                <div className="logo-wall">
-                  {g.customerLogos.map((c) => (
-                    <div key={c.name} title={c.name}>
-                      {c.logoUrl
-                        ? <Image src={c.logoUrl} alt={c.name} width={110} height={36} style={{ objectFit: "contain" }} />
-                        : <span>{c.name}</span>
-                      }
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Gallery */}
             {g.gallery?.length > 0 && (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 14, marginTop: 40 }}>
-                {g.gallery.map((img, idx) => (
-                  <figure key={idx} style={{ margin: 0 }}>
-                    <div style={{ position:"relative", width:"100%", aspectRatio:"4/3", overflow:"hidden", borderRadius:6 }}>
-  <Image src={img.url} alt={img.caption || g.title} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
-</div>
-                    {img.caption && <figcaption style={{ fontSize: 12.5, marginTop: 6, opacity: 0.7 }}>{img.caption}</figcaption>}
-                  </figure>
+              <div className="gallery" style={{ marginTop: 48 }}>
+                {g.gallery.map((ph) => ph.url && (
+                  <div key={ph.url} style={{ position:"relative", aspectRatio:"4/3", overflow:"hidden", borderRadius:6 }}>
+                    <Image src={`${ph.url}?w=600&h=450&fit=crop&auto=format`}
+                      alt={ph.caption || g.title} fill sizes="(max-width:768px) 100vw, 33vw"
+                      style={{ objectFit:"cover" }} />
+                  </div>
                 ))}
               </div>
             )}
@@ -127,32 +110,48 @@ export default async function Capabilities() {
         </section>
       ))}
 
-      {/* Facilities */}
-      <section className="sec">
-        <div className="wrap rv">
-          <div className="sec-head">
-            <Link href="/company/facilities" style={{cursor:"pointer"}}><h2 className="kicker">Where we make ↗</h2></Link>
-            <p className="lede">Ten facilities, Indonesia &amp; China</p>
-          </div>
-          <div className="fac-grid">
-            {caps.facilities.map((f, i) => (
-              <div className="fac" key={f.name}>
-                {f.photoUrl
-                  ? <div style={{ position:"relative", width:"100%", aspectRatio:"16/9", overflow:"hidden", borderRadius:6, marginBottom:10 }}>
-  <Image src={f.photoUrl} alt={f.name} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
-</div>
-                  : <span className="mark" style={{ background: colors[i] }}>{marks[i]}</span>
-                }
-                <div>
-                  <b>{f.name}</b>
-                  <span>{f.location}</span>
-                  <span className="focus">{f.focus}</span>
+      {/* ── Facilities ── */}
+      {caps.facilities?.length > 0 && (
+        <section className="sec warm">
+          <div className="wrap rv">
+            <div className="sec-head">
+              <Link href="/company/facilities" style={{ cursor:"pointer" }}>
+                <h2 className="kicker">Where we make ↗</h2>
+              </Link>
+              <p className="lede">Ten facilities, Indonesia &amp; China</p>
+            </div>
+            <div className="fac-grid">
+              {caps.facilities.map((f, i) => (
+                <div key={f.name} className="fac">
+                  {f.logoUrl ? (
+                    <div style={{ width:56, height:56, borderRadius:12, overflow:"hidden",
+                      background:"#f5f5f5", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                      <Image src={f.logoUrl} alt={f.name} width={48} height={48}
+                        style={{ objectFit:"contain" }} />
+                    </div>
+                  ) : f.photoUrl ? (
+                    <div style={{ position:"relative", width:56, height:56, borderRadius:12,
+                      overflow:"hidden", flexShrink:0 }}>
+                      <Image src={`${f.photoUrl}?w=112&h=112&fit=crop&auto=format`}
+                        alt={f.name} fill sizes="56px" style={{ objectFit:"cover" }} />
+                    </div>
+                  ) : (
+                    <span className="mark"
+                      style={{ background: FAC_COLORS[i % FAC_COLORS.length] }}>
+                      {FAC_MARKS[i % FAC_MARKS.length]}
+                    </span>
+                  )}
+                  <div>
+                    <b>{f.name}</b>
+                    <span>{f.city}</span>
+                    {f.focus && <span className="focus">{f.focus}</span>}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <CtaBand />
     </>

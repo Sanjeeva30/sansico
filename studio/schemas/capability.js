@@ -16,7 +16,20 @@ export default {
     { name: "richBody", title: "Rich body (overrides plain)", type: "array",
       of: [{ type: "block",
         styles: [{ title:"Normal",value:"normal" },{ title:"Heading 2",value:"h2" },{ title:"Heading 3",value:"h3" },{ title:"Quote",value:"blockquote" }],
-        marks: { decorators: [{ title:"Bold",value:"strong" },{ title:"Italic",value:"em" }] }
+        marks: {
+          decorators: [{ title:"Bold",value:"strong" },{ title:"Italic",value:"em" }],
+          annotations: [
+            { name:"colour", type:"object", title:"Text colour", fields: [
+              { name:"hex", type:"string", title:"Brand colour", options: { list:[
+                { title:"Crimson",value:"#7A0D20" },{ title:"Navy",value:"#22409E" },
+                { title:"Green",value:"#0D4F31" },{ title:"Red",value:"#F3263E" },
+                { title:"Citrus",value:"#BDDA5F" }
+              ]}},
+              { name:"customHex", title:"Custom hex", type:"string" }
+            ]},
+            { name:"link", type:"object", title:"Link", fields:[{ name:"href",type:"string" }] }
+          ]
+        }
       }]
     },
     { name: "points",  title: "Bullet points", type: "array", of: [{ type: "string" }] },

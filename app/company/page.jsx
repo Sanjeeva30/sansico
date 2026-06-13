@@ -2,6 +2,7 @@ export const revalidate = 30;
 import Link from "next/link";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
+import RichText from "@/components/RichText";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
@@ -12,15 +13,6 @@ export async function generateMetadata() {
   return getPageSeo("company", {
     title: "Company — Four Decades from Indonesia to the World",
     description: "Sansico Group's story: vision, culture, history and innovation."
-  });
-}
-
-function RichBlocks({ blocks }) {
-  if (!blocks?.length) return null;
-  return blocks.map((b, i) => {
-    const text = b.children?.map(c => c.text).join("") || "";
-    if (b.style === "h3") return <h3 key={i}>{text}</h3>;
-    return <p key={i}>{text}</p>;
   });
 }
 
@@ -60,7 +52,7 @@ export default async function Company() {
             <div>
               {c.overviewTitle && <h2>{c.overviewTitle}</h2>}
             </div>
-            <div className="prose"><RichBlocks blocks={c.overviewBody} /></div>
+            <div className="prose"><RichText blocks={c.overviewBody} /></div>
           </div>
         </section>
       )}

@@ -2,6 +2,7 @@ export const revalidate = 30;
 import Link from "next/link";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
+import RichText from "@/components/RichText";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
@@ -18,17 +19,6 @@ export async function generateMetadata({ params }) {
   return getPageSeo("markets", {
     title: `${m.title} — Sansico Group`,
     description: m.tag || m.body?.slice(0, 155),
-  });
-}
-
-function RichBlocks({ blocks }) {
-  if (!blocks?.length) return null;
-  return blocks.map((b, i) => {
-    const text = b.children?.map(c => c.text).join("") || "";
-    if (b.style === "h2") return <h2 key={i}>{text}</h2>;
-    if (b.style === "h3") return <h3 key={i}>{text}</h3>;
-    if (b.style === "blockquote") return <blockquote key={i}>{text}</blockquote>;
-    return <p key={i}>{text}</p>;
   });
 }
 
@@ -70,7 +60,7 @@ export default async function MarketPage({ params }) {
           <div className="split">
             <div className="prose">
               {m.richBody?.length
-                ? <RichBlocks blocks={m.richBody} />
+                ? <RichText blocks={m.richBody} />
                 : <p>{m.body}</p>
               }
               {m.proof && (

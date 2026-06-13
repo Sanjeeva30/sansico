@@ -5,6 +5,7 @@ export default {
   orderings: [orderRankOrdering],
   fields: [
     orderRankField({ type: "facility" }),
+    { name: "logo", title: "Facility logo / thumbnail", type: "image", description: "Square logo for the capabilities page thumbnail. Replaces the abbreviation badge. 200×200px recommended.", options: { accept: "image/svg+xml,image/png,image/webp" } },
     { name: "visible",  title: "Visible on site", type: "boolean", initialValue: true },
     { name: "name",     type: "string", validation: R => R.required() },
     { name: "city",     type: "string", validation: R => R.required() },
