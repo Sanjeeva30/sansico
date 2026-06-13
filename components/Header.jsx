@@ -17,31 +17,32 @@ export default function Header({ site }) {
     return () => removeEventListener("scroll", onScroll);
   }, [onHome]);
 
-  useEffect(() => {
-    setOpen(false);
-    document.body.style.overflow = "";
-  }, [path]);
+  useEffect(() => { setOpen(false); }, [path]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  const Logo = ({ dark }) => site.logoUrl
-    ? <Image src={site.logoUrl} alt="Sansico Group" width={160} height={36}
-        style={{ objectFit:"contain", filter: dark ? "none" : "brightness(0) invert(1)" }} />
-    : <span style={{ color: dark ? "var(--ink)" : "#fff" }}>
-        <span style={{ letterSpacing:"0.1em", fontWeight:700 }}>SANSICO</span>
-        {" "}<em style={{ fontWeight:400, fontStyle:"italic" }}>Group</em>
-      </span>;
+  const wordmark = (
+    <span style={{ fontWeight: 700, letterSpacing: "0.08em" }}>
+      SANSICO <em style={{ fontWeight: 300, fontStyle: "italic" }}>Group</em>
+    </span>
+  );
 
   return (
     <>
-      <header className={`hd ${solid || open ? "solid" : ""}`}
-        style={!onHome && !solid && !open ? { background:"rgba(16,12,10,.35)", backdropFilter:"blur(6px)" } : undefined}>
+      <header
+        className={`hd ${solid || open ? "solid" : ""}`}
+        style={!onHome && !solid && !open
+          ? { background: "rgba(16,12,10,.35)", backdropFilter: "blur(6px)" }
+          : undefined}>
         <div className="wrap bar">
-          <Link className="logo" href="/" aria-label="Sansico Group home">
-            <Logo dark={solid || open} />
+          <Link className="logo" href="/">
+            {site.logoUrl
+              ? <Image src={site.logoUrl} alt="Sansico Group" width={160} height={36}
+                  style={{ objectFit: "contain" }} />
+              : wordmark}
           </Link>
           <nav className="nav-main" aria-label="Primary">
             {site.nav.map((n) => (
@@ -52,88 +53,106 @@ export default function Header({ site }) {
             ))}
             <Link className="nav-cta" href={site.cta.href}>{site.cta.label}</Link>
           </nav>
-          <button className="menu-btn" aria-expanded={open} aria-label="Toggle menu"
-            onClick={() => setOpen(!open)}>
+          <button
+            className="menu-btn"
+            aria-expanded={open}
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen(v => !v)}>
             {open ? "Close" : "Menu"}
           </button>
         </div>
       </header>
 
-      {/* ── Elegant dark mobile overlay ──────────────── */}
-      <div
-        role="dialog" aria-modal="true" aria-label="Navigation"
-        style={{
-          position: "fixed", inset: 0, zIndex: 9999,
-          background: "rgba(12, 8, 6, 0.97)",
-          display: "flex", flexDirection: "column",
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? "auto" : "none",
-          transition: "opacity 0.35s ease",
+      {open && (
+        <div style={{
+          position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+          zIndex: 9999,
+          background: "#0c0806",
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "auto",
+          WebkitOverflowScrolling: "touch",
         }}>
-
-        {/* Top bar */}
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
-          padding:"24px 6%" }}>
-          <Link href="/" onClick={() => setOpen(false)}
-            style={{ textDecoration:"none", color:"#fff", letterSpacing:"0.1em",
-              fontWeight:700, fontSize:15 }}>
-            SANSICO <em style={{ fontWeight:300, fontStyle:"italic" }}>Group</em>
-          </Link>
-          <button onClick={() => setOpen(false)}
-            style={{ background:"none", border:"1.5px solid rgba(255,255,255,0.3)",
-              borderRadius:999, padding:"7px 20px", color:"rgba(255,255,255,0.85)",
-              fontSize:13, letterSpacing:"0.08em", cursor:"pointer",
-              textTransform:"uppercase", fontWeight:600, transition:"all 0.2s" }}>
-            Close
-          </button>
-        </div>
-
-        {/* Nav items — centered, generous spacing */}
-        <nav style={{ flex:1, display:"flex", flexDirection:"column",
-          justifyContent:"center", padding:"0 8%" }}>
-          {site.nav.map((n, i) => (
-            <Link key={n.href} href={n.href} onClick={() => setOpen(false)}
-              style={{
-                fontSize:"clamp(1.8rem, 8vw, 3rem)", fontWeight:300,
-                color: path.startsWith(n.href) ? "var(--crimson, #7A0D20)" : "rgba(255,255,255,0.92)",
-                textDecoration:"none",
-                padding:"clamp(8px,1.5vw,14px) 0",
-                borderBottom:"1px solid rgba(255,255,255,0.08)",
-                letterSpacing:"-0.01em",
-                transition:"color 0.2s, padding-left 0.2s",
-                display:"block",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = "#fff";
-                e.currentTarget.style.paddingLeft = "8px";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = path.startsWith(n.href)
-                  ? "var(--crimson, #7A0D20)" : "rgba(255,255,255,0.92)";
-                e.currentTarget.style.paddingLeft = "0";
-              }}>
-              {n.label}
+          <div style={{
+            display: "flex", alignItems: "center",
+            justifyContent: "space-between",
+            padding: "22px 6%",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            flexShrink: 0,
+          }}>
+            <Link href="/" onClick={() => setOpen(false)}
+              style={{ textDecoration: "none", color: "#fff" }}>
+              {wordmark}
             </Link>
-          ))}
+            <button onClick={() => setOpen(false)}
+              style={{
+                background: "none",
+                border: "1.5px solid rgba(255,255,255,0.35)",
+                borderRadius: 999,
+                padding: "8px 22px",
+                color: "rgba(255,255,255,0.85)",
+                fontSize: 13,
+                letterSpacing: "0.06em",
+                cursor: "pointer",
+                fontWeight: 600,
+                textTransform: "uppercase",
+              }}>
+              Close
+            </button>
+          </div>
 
-          {/* CTA */}
-          <Link href={site.cta.href} onClick={() => setOpen(false)}
-            style={{ marginTop:"clamp(20px,4vw,40px)", display:"inline-block",
-              background:"var(--crimson, #7A0D20)", color:"#fff",
-              borderRadius:999, padding:"16px 36px",
-              fontSize:15, fontWeight:700, textDecoration:"none",
-              letterSpacing:"0.02em", textAlign:"center",
-              alignSelf:"flex-start" }}>
-            {site.cta.label} →
-          </Link>
-        </nav>
+          <nav style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "32px 8%",
+          }}>
+            {site.nav.map((n) => (
+              <Link key={n.href} href={n.href} onClick={() => setOpen(false)}
+                style={{
+                  display: "block",
+                  fontSize: "clamp(2rem, 9vw, 3.2rem)",
+                  fontWeight: 300,
+                  color: path.startsWith(n.href) ? "#7A0D20" : "rgba(255,255,255,0.88)",
+                  textDecoration: "none",
+                  padding: "12px 0",
+                  borderBottom: "1px solid rgba(255,255,255,0.07)",
+                  lineHeight: 1.2,
+                }}>
+                {n.label}
+              </Link>
+            ))}
+            <Link href={site.cta.href} onClick={() => setOpen(false)}
+              style={{
+                display: "inline-block",
+                alignSelf: "flex-start",
+                marginTop: 36,
+                background: "#7A0D20",
+                color: "#fff",
+                borderRadius: 999,
+                padding: "15px 36px",
+                fontSize: 15,
+                fontWeight: 700,
+                textDecoration: "none",
+                letterSpacing: "0.02em",
+              }}>
+              {site.cta.label} →
+            </Link>
+          </nav>
 
-        {/* Footer hint */}
-        <p style={{ padding:"20px 6%", color:"rgba(255,255,255,0.25)",
-          fontSize:12, letterSpacing:"0.08em", textTransform:"uppercase" }}>
-          Indonesia · China · USA
-        </p>
-      </div>
+          <p style={{
+            padding: "20px 8%",
+            color: "rgba(255,255,255,0.2)",
+            fontSize: 11,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            flexShrink: 0,
+          }}>
+            Indonesia · China · USA
+          </p>
+        </div>
+      )}
     </>
   );
 }
