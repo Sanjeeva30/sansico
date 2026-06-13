@@ -63,8 +63,15 @@ export default async function Sustainability() {
         <div className="wrap sus-grid rv">
           <div>
             <Strip order={[3,5,1,2,4]} style={{ marginBottom:30 }} />
-            <h2>Joy that <em>gives back</em> more than it takes.</h2>
-            <p className="body">Through HERproject we invest in the women who power our workforce; through NEST and our FSC rattan supply chain we bring audited, fair artisan livelihoods into global retail — measured, certified and improving every year.</p>
+            <h2>{s.susSection?.heading ? (
+              <>
+                {s.susSection.heading.split("|")[0]}
+                <em style={{color:"var(--green)"}}>{s.susSection.heading.split("|")[1]}</em>
+                {s.susSection.heading.split("|")[2]}
+              </>
+            ) : <>Joy that <em>gives back</em> more than it takes.</>}
+            </h2>
+            <p className="body">{s.susSection?.body || "Through HERproject we invest in the women who power our workforce; through NEST and our FSC rattan supply chain we bring audited, fair artisan livelihoods into global retail — measured, certified and improving every year."}</p>
           </div>
           <div className="loop" role="img" aria-label={`${s.stat.value} ${s.stat.label}`}>
             <div className="core"><b>{s.stat.value}</b><span>{s.stat.label}</span></div>

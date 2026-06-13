@@ -42,7 +42,7 @@ export default async function Products() {
             <div className="sec-head">
               {cat.coverUrl && (
                 <div style={{ position:"relative", width:"100%", height:320, overflow:"hidden", borderRadius:8, marginBottom:32 }}>
-  <Image src={cat.coverUrl} alt={cat.name} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
+  <Image src={cat.coverUrl ? `${cat.coverUrl}?w=800&h=450&fit=crop&auto=format` : cat.coverUrl} alt={cat.name} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
 </div>
               )}
               <h2 className="kicker">{cat.name}</h2>
@@ -55,7 +55,7 @@ export default async function Products() {
                   <Link key={p.slug} className="card" href={`/products/${p.slug}`}>
                     {p.thumbUrl && (
                       <div style={{ position:"relative", width:"100%", aspectRatio:"4/3", overflow:"hidden", borderRadius:6, marginBottom:14 }}>
-  <Image src={p.thumbUrl} alt={p.name} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
+  <Image src={p.thumbUrl ? `${p.thumbUrl}?w=400&h=400&fit=crop&auto=format` : p.thumbUrl} alt={p.name} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
 </div>
                     )}
                     <h3 style={{ fontSize:16, margin:"0 0 8px" }}>{p.name}</h3>

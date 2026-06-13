@@ -1,12 +1,6 @@
 import Link from "next/link";
 import Arrow from "./Arrow";
 
-const Reg = ({ pos }) => (
-  <span className={`reg ${pos}`} aria-hidden="true">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" /><path d="M12 0v24M0 12h24" /></svg>
-  </span>
-);
-
 export function InkBands() {
   return (
     <div className="press" aria-hidden="true">
@@ -17,7 +11,7 @@ export function InkBands() {
 }
 
 export default function Hero({ hero }) {
-  const [a, b, c] = hero.title.split("|");
+  const [a, b, c] = (hero.title || "").split("|");
   return (
     <section className="hero" aria-label="Sansico Group">
       {hero.type === "video" && hero.videoUrl ? (
@@ -28,7 +22,6 @@ export default function Hero({ hero }) {
         <InkBands />
       )}
       <div className="grain" aria-hidden="true" />
-      <Reg pos="tl" /><Reg pos="tr" /><Reg pos="bl" /><Reg pos="br" />
       <div className="hero-inner">
         <p className="eyebrow">{hero.eyebrow}</p>
         <h1>{a}<em>{b}</em>{c}</h1>

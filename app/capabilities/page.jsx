@@ -72,8 +72,7 @@ export default async function Capabilities() {
               </div>
 
               <div>
-                <Strip style={{ marginBottom: 26 }} />
-                {/* Bullet points */}
+                {/* Bullet points — no Strip above so they align with text */}
                 {g.points?.length > 0 && (
                   <ul className="points">
                     {g.points.map((pt) => <li key={pt}>{pt}</li>)}
