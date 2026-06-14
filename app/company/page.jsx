@@ -38,17 +38,17 @@ export default async function Company() {
       <section className="sec warm" style={{ padding:"clamp(40px,5vw,56px) 0" }}>
         <div className="wrap rv">
           <div style={{ marginBottom:"clamp(24px,3.5vw,36px)", paddingBottom:"clamp(24px,3.5vw,36px)", borderBottom:"1px solid var(--hair,#E5DFD8)" }}>
-            <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:"#7A0D20", margin:"0 0 10px" }}>Vision</p>
+            <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, color:"#7A0D20", margin:"0 0 10px", lineHeight:1, fontFamily:"Georgia,serif" }}>Vision</p>
             <p style={{ fontSize:"clamp(1.1rem,2.2vw,1.5rem)", fontWeight:300, lineHeight:1.55, margin:0, color:"var(--ink,#17120F)", maxWidth:640 }}>{c.vision}</p>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1px 1fr", gap:"clamp(20px,3.5vw,48px)", alignItems:"start" }}>
             <div>
-              <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:"#9A8A80", margin:"0 0 10px" }}>Mission</p>
+              <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, color:"#22409E", margin:"0 0 10px", lineHeight:1, fontFamily:"Georgia,serif" }}>Mission</p>
               <p style={{ fontSize:"clamp(0.95rem,1.5vw,1.1rem)", lineHeight:1.6, margin:0, color:"var(--ink,#17120F)", fontWeight:300, fontStyle:"italic" }}>{c.mission}</p>
             </div>
             <div style={{ background:"var(--hair,#E5DFD8)", alignSelf:"stretch", minHeight:60 }} />
             <div>
-              <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:"#0D4F31", margin:"0 0 10px" }}>Culture</p>
+              <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, color:"#0D4F31", margin:"0 0 10px", lineHeight:1, fontFamily:"Georgia,serif" }}>Culture</p>
               <p style={{ fontSize:"clamp(0.95rem,1.5vw,1.1rem)", lineHeight:1.6, margin:0, color:"var(--ink,#17120F)", fontWeight:300 }}>{c.culture}</p>
             </div>
           </div>
