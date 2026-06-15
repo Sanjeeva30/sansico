@@ -1,0 +1,41 @@
+/* Scroll-reveal — ALL card-like elements */
+.scroll-ready [data-animate],.scroll-ready .card,.scroll-ready .fac,.scroll-ready .stat,.scroll-ready .market,.scroll-ready .gate,.scroll-ready .points li,.scroll-ready .elevate{opacity:0;transform:translateY(44px) scale(0.97);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1),box-shadow 0.4s ease}
+.scroll-ready [data-animate].in-view,.scroll-ready .card.in-view,.scroll-ready .fac.in-view,.scroll-ready .stat.in-view,.scroll-ready .market.in-view,.scroll-ready .gate.in-view,.scroll-ready .points li.in-view,.scroll-ready .elevate.in-view{opacity:1;transform:none}
+.card-grid>.card:nth-child(1),.market-grid>.market:nth-child(1){transition-delay:0s}
+.card-grid>.card:nth-child(2),.market-grid>.market:nth-child(2){transition-delay:.1s}
+.card-grid>.card:nth-child(3),.market-grid>.market:nth-child(3){transition-delay:.2s}
+.card-grid>.card:nth-child(4),.market-grid>.market:nth-child(4){transition-delay:.3s}
+.card-grid>.card:nth-child(5),.market-grid>.market:nth-child(5){transition-delay:.4s}
+.card-grid>.card:nth-child(6),.market-grid>.market:nth-child(6){transition-delay:.5s}
+.stats-row>.stat:nth-child(1){transition-delay:0s}.stats-row>.stat:nth-child(2){transition-delay:.12s}.stats-row>.stat:nth-child(3){transition-delay:.24s}.stats-row>.stat:nth-child(4){transition-delay:.36s}
+
+/* Deep three-layer shadow */
+.card,.market,.gate,.stat,.fac,.elevate{box-shadow:0 1px 4px rgba(23,18,15,.06),0 8px 24px rgba(23,18,15,.12),0 24px 64px rgba(23,18,15,.12);transition:box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+.card:hover,.market:hover,.gate:hover,.elevate:hover{box-shadow:0 2px 8px rgba(23,18,15,.08),0 16px 48px rgba(23,18,15,.18),0 36px 88px rgba(23,18,15,.18);transform:translateY(-6px)}
+
+/* Rotating border glow — openswarm style */
+@property --ba{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes border-spin{to{--ba:360deg}}
+.border-loop{position:relative;isolation:isolate}
+.border-loop::before{content:'';position:absolute;inset:-2px;border-radius:inherit;background:conic-gradient(from var(--ba),transparent 0deg,transparent 60deg,#7A0D20 90deg,#22409E 150deg,#0D4F31 200deg,#BDDA5F 240deg,transparent 270deg,transparent 360deg);animation:border-spin 5s linear infinite;z-index:-1}
+.border-loop::after{content:'';position:absolute;inset:2px;border-radius:calc(var(--radius,8px) - 2px);background:var(--card-bg,#fff);z-index:-1}
+
+/* Hero animations */
+@keyframes press-arrive{from{transform:rotate(-14deg) scale(1.08) translateY(-24px);opacity:0}to{transform:rotate(-14deg) scale(1) translateY(0);opacity:1}}
+@keyframes press-loop{0%{transform:rotate(-14.0deg) scale(1.00) translateY(0px);filter:saturate(1.00) brightness(1.00)}25%{transform:rotate(-14.7deg) scale(1.05) translateY(-12px);filter:saturate(1.15) brightness(1.05)}50%{transform:rotate(-13.7deg) scale(1.02) translateY(8px);filter:saturate(0.92) brightness(0.96)}75%{transform:rotate(-14.5deg) scale(1.06) translateY(-8px);filter:saturate(1.10) brightness(1.03)}100%{transform:rotate(-14.0deg) scale(1.00) translateY(0px);filter:saturate(1.00) brightness(1.00)}}
+@keyframes grain-pulse{0%,100%{opacity:.16}50%{opacity:.30}}
+@keyframes hero-vignette{0%,100%{opacity:1}50%{opacity:.78}}
+@keyframes hero-eyebrow{from{opacity:0;letter-spacing:.05em}to{opacity:1;letter-spacing:.34em}}
+@keyframes hero-rise{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+@keyframes hero-em{from{opacity:0;transform:translateX(20px) scale(0.9)}to{opacity:1;transform:translateX(0) scale(1)}}
+.hero .press{animation:press-arrive 1.6s cubic-bezier(0.16,1,0.3,1) .1s both,press-loop 16s ease-in-out 1.8s infinite!important}
+.hero .grain{animation:grain-pulse 9s ease-in-out infinite}
+.hero::before{animation:hero-vignette 12s ease-in-out infinite}
+.hero-inner .eyebrow{animation:hero-eyebrow 1.0s cubic-bezier(0.16,1,0.3,1) .40s both}
+.hero-inner h1{animation:hero-rise .9s cubic-bezier(0.16,1,0.3,1) .60s both}
+.hero-inner h1 em{display:inline-block;animation:hero-em 1.0s cubic-bezier(0.16,1,0.3,1) .78s both}
+.hero-inner .sub{animation:hero-rise .9s cubic-bezier(0.16,1,0.3,1) .82s both}
+.hero-inner .btn-light{animation:hero-rise .8s cubic-bezier(0.16,1,0.3,1) 1.00s both}
+.hero-inner .btn-ghost{animation:hero-rise .8s cubic-bezier(0.16,1,0.3,1) 1.10s both}
+
+@media(prefers-reduced-motion:reduce){.scroll-ready [data-animate],.scroll-ready .card,.scroll-ready .fac,.scroll-ready .stat,.scroll-ready .market,.scroll-ready .gate,.scroll-ready .elevate,.scroll-ready .points li{opacity:1!important;transform:none!important;transition:none!important}.hero .press,.hero .grain,.hero::before,.hero-inner .eyebrow,.hero-inner h1,.hero-inner h1 em,.hero-inner .sub,.hero-inner .btn-light,.hero-inner .btn-ghost{animation:none!important;opacity:1!important;transform:none!important;letter-spacing:inherit!important}.border-loop::before{animation:none!important}}
