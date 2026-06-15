@@ -336,3 +336,18 @@ a.card:hover{border-color:var(--crimson);transform:translateY(-4px);box-shadow:0
 .scroll-ready .card-grid>.card:nth-child(5){transition-delay:0.40s}
 .scroll-ready .card-grid>.card:nth-child(6){transition-delay:0.50s}
 @media(prefers-reduced-motion:reduce){.scroll-ready .card,.scroll-ready .fac,.scroll-ready .points li{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* Deep three-layer shadows */
+.card,.market,.gate,.stat,.fac,.chip{box-shadow:0 1px 3px rgba(23,18,15,.05),0 6px 20px rgba(23,18,15,.10),0 18px 52px rgba(23,18,15,.10);transition:box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+.card:hover,.market:hover,.gate:hover{box-shadow:0 2px 6px rgba(23,18,15,.06),0 12px 40px rgba(23,18,15,.16),0 28px 72px rgba(23,18,15,.16);transform:translateY(-6px)}
+.stat{box-shadow:0 1px 3px rgba(23,18,15,.04),0 4px 16px rgba(23,18,15,.08),0 12px 36px rgba(23,18,15,.07)}
+.fac{box-shadow:0 2px 8px rgba(23,18,15,.06),0 8px 28px rgba(23,18,15,.10),0 20px 52px rgba(23,18,15,.09)}
+
+/* Continuous looping ink animation */
+@keyframes press-loop{0%{transform:rotate(-14.0deg) scale(1.00) translateY(0px);filter:saturate(1.00) brightness(1.00)}25%{transform:rotate(-14.6deg) scale(1.04) translateY(-10px);filter:saturate(1.12) brightness(1.04)}50%{transform:rotate(-13.8deg) scale(1.02) translateY(6px);filter:saturate(0.95) brightness(0.97)}75%{transform:rotate(-14.4deg) scale(1.05) translateY(-6px);filter:saturate(1.08) brightness(1.02)}100%{transform:rotate(-14.0deg) scale(1.00) translateY(0px);filter:saturate(1.00) brightness(1.00)}}
+@keyframes grain-pulse{0%,100%{opacity:.18}50%{opacity:.28}}
+@keyframes hero-vignette{0%,100%{opacity:1}50%{opacity:.82}}
+.hero .press{animation:press-arrive 1.6s cubic-bezier(0.16,1,0.3,1) 0s both,press-loop 14s ease-in-out 1.6s infinite}
+.hero .grain{animation:grain-pulse 8s ease-in-out infinite}
+.hero::before{animation:hero-vignette 10s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.hero .press,.hero .grain,.hero::before{animation:none!important;transform:rotate(-14deg)!important;opacity:1!important;filter:saturate(1.05)!important}}
