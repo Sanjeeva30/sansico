@@ -26,7 +26,7 @@ export default async function Careers() {
           <div className="wrap rv">
             <div className="card-grid">
               {values.map((v) => (
-                <div className="card" key={v.title}><h3>{v.title}</h3><p>{v.body}</p></div>
+                <div className="card" data-animate key={v.title}><h3>{v.title}</h3><p>{v.body}</p></div>
               ))}
             </div>
           </div>
@@ -41,7 +41,7 @@ export default async function Careers() {
             </div>
             <div className="card-grid">
               {c.openRoles.map((r) => (
-                <div className="card" key={r.title}>
+                <div className="card" data-animate key={r.title}>
                   <h3>{r.title}</h3>
                   <span className="kicker">{r.location}</span>
                   {r.description && <p style={{ marginTop:10 }}>{r.description}</p>}

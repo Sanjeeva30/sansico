@@ -1,6 +1,7 @@
 export const revalidate = 30;
 import "./globals.css";
 import localFont from "next/font/local";
+import ScrollObserver from "@/components/ScrollObserver";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getSite } from "@/lib/content";
@@ -46,7 +47,8 @@ export default async function RootLayout({ children }) {
       <body style={themeVars}>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
-        <Header site={site} />
+        <ScrollObserver />
+      <Header site={site} />
         <main>{children}</main>
         <Footer site={site} />
       </body>

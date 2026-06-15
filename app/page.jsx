@@ -66,7 +66,7 @@ export default async function Home() {
           </div>
           <div className="gate-grid">
             {caps.groups.map((g, i) => (
-              <Link className="gate rv" href={`/capabilities#${g.slug}`} key={g.slug}>
+              <Link className="gate rv" data-animate href={`/capabilities#${g.slug}`} key={g.slug}>
                 <div className={`art ${arts[i]}`} aria-hidden="true" />
                 <div className="inner">
                   <span className="num">{g.num}</span>
@@ -88,7 +88,7 @@ export default async function Home() {
           </div>
           <div className="market-grid">
             {markets.items.map((m) => (
-              <Link className="market" href={`/markets/${m.slug}`} key={m.slug}>
+              <Link className="market" data-animate href={`/markets/${m.slug}`} key={m.slug}>
                 <span style={{ display:"block", width:10, height:10, borderRadius:"50%", background: m.colorHex || "var(--crimson)", marginBottom:16 }} aria-hidden="true" />
                 <h3>{m.title}</h3>
                 <p>{m.tag}</p>

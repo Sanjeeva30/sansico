@@ -73,7 +73,7 @@ export default async function Products() {
                     style={{ textDecoration:"none", display:"block", borderRadius:10,
                       border:"1px solid var(--hair, #e8e5df)", overflow:"hidden",
                       transition:"box-shadow 0.2s, transform 0.2s", background:"#fff" }}
-                    className="prod-card">
+                    className="prod-card" data-animate>
 
                     {/* Square image */}
                     <div style={{ position:"relative", width:"100%", aspectRatio:"1/1",

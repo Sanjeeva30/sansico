@@ -16,7 +16,7 @@ export default async function CtaBand() {
 
   return (
     <section className="cta sec" id="contact-cta">
-      <div className="wrap rv">
+      <div className="wrap rv" data-animate>
         <h2>{a}<em>{b}</em>{c}</h2>
         <p>{subline}</p>
         <Link className="btn btn-red" href={btn1.href}>{btn1.label} <Arrow /></Link>
