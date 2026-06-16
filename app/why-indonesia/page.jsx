@@ -4,7 +4,6 @@ import Reveal from "@/components/Reveal";
 import Strip from "@/components/Strip";
 import CtaBand from "@/components/CtaBand";
 import { getWhyIndonesia } from "@/lib/content";
-import { InkBands } from "@/components/Hero";
 
 export async function generateMetadata() {
   return {
@@ -13,14 +12,13 @@ export async function generateMetadata() {
   };
 }
 
-// ── Score cell colour mapping — brand palette ─────────────
 function scoreStyle(score, isIndonesia = false) {
   const base = {
     5: { bg: "rgba(122,13,32,0.10)", color: "#7A0D20", fw: 700 },
-    4: { bg: "rgba(34,64,158,0.09)", color: "#22409E", fw: 700 },
+    4: { bg: "rgba(34,64,158,0.09)",  color: "#22409E", fw: 700 },
     3: { bg: "rgba(189,218,95,0.30)", color: "#4A5C00", fw: 600 },
-    2: { bg: "#F5EFE6",              color: "#8C7B6E", fw: 400 },
-    1: { bg: "#FAF8F4",              color: "#B0A090", fw: 400 },
+    2: { bg: "#F5EFE6",               color: "#8C7B6E", fw: 400 },
+    1: { bg: "#FAF8F4",               color: "#B0A090", fw: 400 },
   }[score] || { bg: "#fff", color: "#333", fw: 400 };
   if (isIndonesia) return {
     ...base,
@@ -29,7 +27,6 @@ function scoreStyle(score, isIndonesia = false) {
   return base;
 }
 
-// ── Section label pill ────────────────────────────────────
 function Label({ n, children }) {
   return (
     <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:20 }}>
@@ -43,7 +40,6 @@ function Label({ n, children }) {
   );
 }
 
-// ── Scorecard data (hardcoded — research data) ────────────
 const SCORECARD_HEADERS = ["Cost corridor","Scale","Materials","Infrastructure","Compliance","Trade risk","Total"];
 const SCORECARD_ROWS = [
   { country:"Indonesia", star:true,  scores:[4,5,5,4,4,4], total:26 },
@@ -64,7 +60,6 @@ const SCORE_LEGEND = [
 export default async function WhyIndonesia() {
   const d = await getWhyIndonesia();
 
-  // Group sources by category
   const sourcesGrouped = {};
   (d.sources || []).forEach((s) => {
     const cat = s.category || "Other";
@@ -76,110 +71,47 @@ export default async function WhyIndonesia() {
     <>
       <Reveal />
 
-      {/* ── HERO: Indonesia map · flag · brand ─────────── */}
+      {/* ── HERO — real Indonesia map image ─────────────────── */}
       <section style={{
         position:"relative", overflow:"hidden",
-        background:"linear-gradient(150deg,#060A10 0%,#0C1220 45%,#070B14 100%)",
+        background:"#080C12",
         paddingTop:"clamp(96px,13vw,152px)",
-        paddingBottom:"clamp(72px,9vw,108px)"
+        paddingBottom:"clamp(80px,10vw,120px)"
       }}>
 
-        {/* Flag stripe — right edge, red top / white bottom */}
-        <div aria-hidden="true" style={{
-          position:"absolute", right:0, top:0, bottom:0, width:12, zIndex:5,
-          background:"linear-gradient(to bottom,#CE1126 50%,#F5F5F0 50%)"
+        {/* Map image — right side, full height */}
+        <div style={{
+          position:"absolute", right:0, top:0, bottom:0,
+          width:"62%", zIndex:1,
+          backgroundImage:"url('/Indonesia.png')",
+          backgroundSize:"cover",
+          backgroundPosition:"center center",
+          filter:"brightness(0.60) saturate(1.25) contrast(1.05)"
         }}/>
-        {/* Flag diagonal wash — right 42% */}
+
+        {/* Gradient: dark left → transparent right */}
+        <div style={{
+          position:"absolute", inset:0, zIndex:2,
+          background:"linear-gradient(to right, #080C12 30%, rgba(8,12,18,0.88) 50%, rgba(8,12,18,0.35) 75%, rgba(8,12,18,0.1) 100%)"
+        }}/>
+
+        {/* Bottom fade to merge with stat cards */}
+        <div style={{
+          position:"absolute", bottom:0, left:0, right:0,
+          height:"45%", zIndex:2,
+          background:"linear-gradient(to top, #080C12 0%, transparent 100%)"
+        }}/>
+
+        {/* Indonesian flag — right edge accent */}
         <div aria-hidden="true" style={{
-          position:"absolute", right:0, top:0, bottom:0, width:"42%", zIndex:1,
-          background:"linear-gradient(to bottom,rgba(206,17,38,0.06) 50%,rgba(245,245,240,0.03) 50%)",
-          clipPath:"polygon(8% 0,100% 0,100% 100%,0 100%)"
+          position:"absolute", right:0, top:0, bottom:0, width:10, zIndex:5,
+          background:"linear-gradient(to bottom,#CE1126 50%,#F5F5F0 50%)"
         }}/>
         {/* Thin flag midline */}
         <div aria-hidden="true" style={{
-          position:"absolute", right:12, top:"50%", width:"38%", height:"1px", zIndex:3,
-          background:"linear-gradient(to right,transparent,rgba(206,17,38,0.4) 30%,rgba(245,245,240,0.3) 50%,transparent)"
-        }}/>
-
-        {/* Indonesia archipelago SVG watermark */}
-        <svg aria-hidden="true" viewBox="0 0 1080 300"
-          preserveAspectRatio="xMaxYMid meet"
-          style={{
-            position:"absolute", right:"-2%", top:"50%",
-            transform:"translateY(-50%)",
-            width:"65%", height:"90%", zIndex:2, pointerEvents:"none"
-          }}>
-          <defs>
-            <linearGradient id="ig" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"   stopColor="#CE1126" stopOpacity="0.22"/>
-              <stop offset="55%"  stopColor="#CE1126" stopOpacity="0.13"/>
-              <stop offset="100%" stopColor="#CE1126" stopOpacity="0.04"/>
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3.5" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          {/* lat/lon grid */}
-          <g stroke="#fff" strokeOpacity="0.05" strokeWidth="0.6" fill="none">
-            {[60,120,180,240].map(y=><line key={y} x1="0" y1={y} x2="1080" y2={y}/>)}
-            {[135,270,405,540,675,810,945].map(x=><line key={x} x1={x} y1="0" x2={x} y2="300"/>)}
-          </g>
-          {/* SUMATRA – NW-SE elongated */}
-          <path filter="url(#glow)"
-            d="M10,85 C18,58 46,36 80,22 110,10 140,9 162,20 178,32 184,52 180,74 172,98 152,120 122,138 88,156 54,160 30,146 12,132 6,110 10,85Z"
-            fill="url(#ig)" stroke="#CE1126" strokeWidth="1.2" strokeOpacity="0.55"/>
-          {/* JAVA – narrow E-W */}
-          <path filter="url(#glow)"
-            d="M176,188 C192,180 222,174 264,171 306,168 352,170 394,177 424,184 436,195 428,206 410,215 374,218 334,218 294,217 256,212 220,204 192,194 176,188Z"
-            fill="url(#ig)" stroke="#CE1126" strokeWidth="1.2" strokeOpacity="0.55"/>
-          {/* Bali + Lombok */}
-          <ellipse cx="448" cy="200" rx="13" ry="8" fill="#CE1126" fillOpacity="0.15" stroke="#CE1126" strokeWidth="1" strokeOpacity="0.4"/>
-          <ellipse cx="470" cy="202" rx="9"  ry="7" fill="#CE1126" fillOpacity="0.12" stroke="#CE1126" strokeWidth="1" strokeOpacity="0.35"/>
-          <ellipse cx="490" cy="208" rx="7"  ry="6" fill="#CE1126" fillOpacity="0.09" stroke="#CE1126" strokeWidth="1" strokeOpacity="0.3"/>
-          {/* KALIMANTAN – large */}
-          <path filter="url(#glow)"
-            d="M264,22 C290,4 338,-4 390,-2 444,0 496,14 532,34 560,52 568,82 560,114 548,144 522,166 486,180 444,192 396,192 352,176 314,160 282,134 264,104 250,78 252,44 264,22Z"
-            fill="url(#ig)" stroke="#CE1126" strokeWidth="1.2" strokeOpacity="0.55"/>
-          {/* SULAWESI – K-shape (4 arms) */}
-          <path filter="url(#glow)"
-            d="M594,44 C606,26 626,18 646,24 660,30 668,48 664,68 656,88 638,100 622,96 606,90 596,72 594,52Z"
-            fill="url(#ig)" stroke="#CE1126" strokeWidth="1.2" strokeOpacity="0.5"/>
-          <path filter="url(#glow)"
-            d="M654,28 C670,12 692,6 708,14 720,24 720,44 708,58 694,70 676,70 664,58 654,46Z"
-            fill="url(#ig)" stroke="#CE1126" strokeWidth="1.1" strokeOpacity="0.45"/>
-          <path filter="url(#glow)"
-            d="M628,90 C644,100 662,120 666,148 668,170 656,188 638,192 620,192 606,178 602,160 600,140 610,118 622,104Z"
-            fill="url(#ig)" stroke="#CE1126" strokeWidth="1.1" strokeOpacity="0.45"/>
-          <path filter="url(#glow)"
-            d="M662,70 C680,80 700,100 706,126 708,148 696,166 676,168 658,166 644,150 644,130 644,110 654,92Z"
-            fill="url(#ig)" stroke="#CE1126" strokeWidth="1.1" strokeOpacity="0.45"/>
-          {/* MALUKU – scattered */}
-          {[[762,80,13,9],[790,108,10,7],[768,132,9,6],[812,72,8,6],[800,150,7,5]].map(([cx,cy,rx,ry],i)=>(
-            <ellipse key={i} cx={cx} cy={cy} rx={rx} ry={ry}
-              fill="#CE1126" fillOpacity="0.12" stroke="#CE1126" strokeWidth="0.8" strokeOpacity="0.32"/>
-          ))}
-          {/* PAPUA – large E teardrop */}
-          <path filter="url(#glow)"
-            d="M840,44 C868,24 916,14 968,18 1020,24 1068,44 1092,72 1100,100 1092,132 1068,156 1032,174 984,182 936,178 892,162 856,142 830,114 820,86 824,62 840,44Z"
-            fill="url(#ig)" stroke="#CE1126" strokeWidth="1.2" strokeOpacity="0.55"/>
-          {/* INDONESIA label ghost */}
-          <text x="540" y="280" textAnchor="middle"
-            fill="#fff" fillOpacity="0.07" fontSize="10" fontWeight="800"
-            letterSpacing="0.32em" fontFamily="system-ui,sans-serif">INDONESIA</text>
-        </svg>
-
-        {/* Sunrise glow — top right */}
-        <div aria-hidden="true" style={{
-          position:"absolute", top:"-30%", right:"12%",
-          width:520, height:520, borderRadius:"50%", zIndex:1,
-          background:"radial-gradient(circle,rgba(206,17,38,0.11) 0%,rgba(122,13,32,0.04) 40%,transparent 70%)"
-        }}/>
-        {/* Ocean glow — bottom left */}
-        <div aria-hidden="true" style={{
-          position:"absolute", bottom:"-20%", left:"5%",
-          width:380, height:380, borderRadius:"50%", zIndex:1,
-          background:"radial-gradient(circle,rgba(34,64,158,0.08) 0%,transparent 70%)"
+          position:"absolute", right:10, top:"50%",
+          width:"30%", height:"1px", zIndex:3,
+          background:"linear-gradient(to right,rgba(206,17,38,0.35),transparent)"
         }}/>
 
         {/* Content */}
@@ -190,32 +122,35 @@ export default async function WhyIndonesia() {
               <div key={c} style={{ height:3, flex:1, background:c, borderRadius:2 }}/>
             ))}
           </div>
+
           <p style={{ fontSize:11, letterSpacing:"0.16em", textTransform:"uppercase",
             color:"rgba(255,255,255,0.45)", margin:"0 0 18px" }}>
             Indonesia Sourcing Intelligence Brief · 2025–2026
           </p>
+
           <h1 style={{ fontSize:"clamp(2.2rem,5vw,3.8rem)", fontWeight:300,
-            lineHeight:1.1, letterSpacing:"-0.02em", color:"#fff",
-            margin:"0 0 18px", maxWidth:600 }}>
+            lineHeight:1.1, letterSpacing:"-0.02em", color:"#ffffff",
+            margin:"0 0 18px", maxWidth:560 }}>
             {d.heroTitle}
           </h1>
+
           <p style={{ fontSize:15, lineHeight:1.65, margin:0,
-            color:"rgba(255,255,255,0.50)", maxWidth:480 }}>
+            color:"rgba(255,255,255,0.55)", maxWidth:460 }}>
             {d.heroSubtitle}
           </p>
         </div>
       </section>
 
-      {/* Stats — floating white cards, overlap hero bottom */}
+      {/* ── Stats — elevated white cards overlapping hero ──── */}
       <div className="wrap" style={{
-        transform:"translateY(-44px)", position:"relative",
-        zIndex:10, marginBottom:"-8px"
+        transform:"translateY(-44px)",
+        position:"relative", zIndex:10, marginBottom:"-8px"
       }}>
         <div style={{ display:"grid",
           gridTemplateColumns:"repeat(auto-fit,minmax(172px,1fr))", gap:14 }}>
           {d.heroStats?.map((s,i) => (
             <div key={s.label} className="card" style={{
-              background:"#fff", borderRadius:10,
+              background:"#ffffff", borderRadius:10,
               padding:"clamp(18px,2.5vw,26px)",
               borderTop:"2px solid #7A0D20"
             }}>
@@ -233,7 +168,7 @@ export default async function WhyIndonesia() {
         </div>
       </div>
 
-            {/* ── EXECUTIVE POSITION ──────────────────────── */}
+      {/* ── EXECUTIVE POSITION ───────────────────────────── */}
       <section className="sec">
         <div className="wrap rv">
           <Label n={1}>Executive Position</Label>
@@ -242,21 +177,18 @@ export default async function WhyIndonesia() {
               fontWeight:400, lineHeight:1.3, margin:0 }}>
               {d.executiveTitle}
             </h2>
-            <p style={{ fontSize:15.5, lineHeight:1.75, margin:0,
-              color:"#6B5F58" }}>
+            <p style={{ fontSize:15.5, lineHeight:1.75, margin:0, color:"#6B5F58" }}>
               {d.executiveIntro}
             </p>
           </div>
 
-          {/* Six dimension cards */}
           <div style={{ display:"grid",
             gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",
             gap:0, border:"1px solid var(--hair,#E5DFD8)" }}>
             {d.dimensions?.map((dim, i) => (
               <div key={dim.title} data-animate style={{
                 padding:"24px 24px 28px",
-                borderRight: (i+1) % 2 === 0
-                  ? "none" : "1px solid var(--hair,#E5DFD8)",
+                borderRight: (i+1) % 2 === 0 ? "none" : "1px solid var(--hair,#E5DFD8)",
                 borderBottom:"1px solid var(--hair,#E5DFD8)",
                 background:"#fff"
               }}>
@@ -278,7 +210,6 @@ export default async function WhyIndonesia() {
             ))}
           </div>
 
-          {/* Conclusion */}
           <div data-animate style={{ marginTop:32, padding:"20px 24px",
             background:"rgba(122,13,32,0.05)",
             borderLeft:"3px solid #7A0D20", borderRadius:"0 6px 6px 0" }}>
@@ -293,7 +224,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── ASEAN CONTEXT ──────────────────────────── */}
+      {/* ── ASEAN PEER CONTEXT ───────────────────────────── */}
       <section className="sec warm">
         <div className="wrap rv">
           <Label n={2}>ASEAN Peer Context</Label>
@@ -327,7 +258,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── ASEAN COP SCORECARD ─────────────────────── */}
+      {/* ── ASEAN COP SCORECARD ──────────────────────────── */}
       <section className="sec">
         <div className="wrap rv">
           <Label n={3}>ASEAN COP Scorecard</Label>
@@ -341,8 +272,7 @@ export default async function WhyIndonesia() {
           </p>
 
           {/* Legend */}
-          <div style={{ display:"flex", gap:20, flexWrap:"wrap",
-            marginBottom:20 }}>
+          <div style={{ display:"flex", gap:20, flexWrap:"wrap", marginBottom:20 }}>
             {SCORE_LEGEND.map(({ score, label }) => {
               const s = scoreStyle(score);
               return (
@@ -362,7 +292,7 @@ export default async function WhyIndonesia() {
             })}
           </div>
 
-          {/* Table — responsive wrapper */}
+          {/* Table */}
           <div style={{ overflowX:"auto", borderRadius:8,
             border:"1px solid var(--hair,#E5DFD8)" }}
           className="scorecard-wrap" data-animate>
@@ -395,7 +325,6 @@ export default async function WhyIndonesia() {
                       background: isIndo ? "rgba(122,13,32,0.04)" : (ri % 2 ? "#FAF8F4" : "#fff"),
                       borderBottom:"1px solid var(--hair,#E5DFD8)"
                     }}>
-                      {/* Country name */}
                       <td style={{ padding:"12px 16px",
                         fontSize:14, fontWeight: isIndo ? 700 : 400,
                         color: isIndo ? "#7A0D20" : "#17120F",
@@ -403,7 +332,6 @@ export default async function WhyIndonesia() {
                         whiteSpace:"nowrap" }}>
                         {row.country}{row.star ? " ★" : ""}
                       </td>
-                      {/* Score cells */}
                       {row.scores.map((score, si) => {
                         const s = scoreStyle(score, isIndo);
                         return (
@@ -420,7 +348,6 @@ export default async function WhyIndonesia() {
                           </td>
                         );
                       })}
-                      {/* Total */}
                       <td style={{ padding:"10px 12px", textAlign:"center" }}>
                         <span style={{ display:"inline-flex",
                           alignItems:"center", justifyContent:"center",
@@ -438,7 +365,6 @@ export default async function WhyIndonesia() {
             </table>
           </div>
 
-          {/* Vietnam NME note */}
           {d.scorecardVietnamNote && (
             <p style={{ fontSize:13.5, lineHeight:1.7, margin:"20px 0 0",
               color:"#6B5F58" }}>
@@ -446,8 +372,6 @@ export default async function WhyIndonesia() {
               {d.scorecardVietnamNote.replace("Vietnam NME risk as a sourcing consideration: ","")}
             </p>
           )}
-
-          {/* Balanced conclusion */}
           {d.scorecardConclusion && (
             <div data-animate className="card" style={{ marginTop:16, padding:"16px 20px",
               background:"rgba(122,13,32,0.04)",
@@ -463,7 +387,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── JAVA GEOGRAPHY ─────────────────────────── */}
+      {/* ── JAVA GEOGRAPHY ───────────────────────────────── */}
       <section className="sec warm">
         <div className="wrap rv">
           <Label n={4}>Java Production Geography</Label>
@@ -488,7 +412,6 @@ export default async function WhyIndonesia() {
             </div>
           </div>
 
-          {/* Region rows */}
           <div style={{ borderTop:"1px solid var(--hair,#E5DFD8)" }}>
             {d.javaRegions?.map((r, i) => (
               <div key={r.name} data-animate style={{ display:"grid",
@@ -511,7 +434,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── PRIORITY SECTORS ────────────────────────── */}
+      {/* ── PRIORITY SECTORS ─────────────────────────────── */}
       <section className="sec">
         <div className="wrap rv">
           <Label n={5}>Priority Sectors</Label>
@@ -540,7 +463,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── SUSTAINABILITY ──────────────────────────── */}
+      {/* ── SUSTAINABILITY ───────────────────────────────── */}
       <section className="sec warm">
         <div className="wrap rv">
           <Label n={6}>Sustainability &amp; ESG Direction</Label>
@@ -581,7 +504,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── TRADE ARCHITECTURE ─────────────────────── */}
+      {/* ── TRADE ARCHITECTURE ───────────────────────────── */}
       <section className="sec">
         <div className="wrap rv">
           <Label n={7}>Trade Architecture &amp; Market Access</Label>
@@ -600,8 +523,9 @@ export default async function WhyIndonesia() {
             gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",
             gap:14 }}>
             {d.tradeAgreements?.map((a) => (
-              <div key={a.name} data-animate style={{ background:"#fff",
-                padding:"24px 24px 28px" }}>
+              <div key={a.name} data-animate className="card" style={{
+                background:"#fff", padding:"24px 24px 28px",
+                borderTop:"2px solid #7A0D20", borderRadius:8 }}>
                 <p style={{ fontSize:18, fontWeight:700,
                   color:"#17120F", margin:"0 0 10px" }}>
                   {a.name}
@@ -616,7 +540,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── FIBER-BASED SEASONAL ────────────────────── */}
+      {/* ── FIBER-BASED SEASONAL ─────────────────────────── */}
       <section className="sec warm">
         <div className="wrap rv">
           <Label n={8}>Fiber-Based Seasonal Goods</Label>
@@ -635,9 +559,9 @@ export default async function WhyIndonesia() {
             gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",
             gap:16 }}>
             {d.fiberPoints?.map((pt, i) => (
-              <div key={pt.title} data-animate style={{ padding:"20px 20px 24px",
+              <div key={pt.title} data-animate className="card" style={{
+                padding:"20px 20px 24px",
                 background:"#fff", borderRadius:8,
-                border:"1px solid var(--hair,#E5DFD8)",
                 borderTop:`2px solid ${["#7A0D20","#22409E","#0D4F31"][i]}` }}>
                 <p style={{ fontSize:12, fontWeight:700,
                   letterSpacing:"0.07em", textTransform:"uppercase",
@@ -655,7 +579,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── STRATEGIC CONCLUSION ────────────────────── */}
+      {/* ── STRATEGIC CONCLUSION ─────────────────────────── */}
       <section className="sec">
         <div className="wrap rv">
           <Label n={9}>Strategic Sourcing Implication</Label>
@@ -671,8 +595,9 @@ export default async function WhyIndonesia() {
             gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",
             gap:12 }}>
             {d.conclusionBullets?.map((b, i) => (
-              <li key={i} data-animate style={{ display:"flex", gap:10,
-                alignItems:"start" }}>
+              <li key={i} data-animate className="card" style={{
+                display:"flex", gap:10, alignItems:"start",
+                background:"#fff", borderRadius:8, padding:"14px 18px" }}>
                 <span style={{ color:"#7A0D20", flexShrink:0,
                   fontWeight:700, fontSize:16, marginTop:-1 }}>—</span>
                 <span style={{ fontSize:14.5, lineHeight:1.6,
@@ -685,7 +610,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── SANSICO CTA ─────────────────────────────── */}
+      {/* ── CTA ──────────────────────────────────────────── */}
       <section className="sec warm"
         style={{ borderTop:"1px solid var(--hair,#E5DFD8)" }}>
         <div className="wrap rv" style={{ textAlign:"center",
@@ -713,7 +638,7 @@ export default async function WhyIndonesia() {
         </div>
       </section>
 
-      {/* ── SOURCES ─────────────────────────────────── */}
+      {/* ── SOURCES ──────────────────────────────────────── */}
       {d.sources?.length > 0 && (
         <section style={{ background:"#FAF8F4",
           borderTop:"1px solid var(--hair,#E5DFD8)",
