@@ -76,9 +76,6 @@ export default async function Home() {
               );
             })}
           </div>
-          {!home.customers.some(c => c.logoUrl) && (
-            <p className="logo-note">Upload logos in the Studio — Home Page → Customer wall → each entry has a logo field.</p>
-          )}
         </div>
       </section>
 
