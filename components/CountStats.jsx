@@ -45,9 +45,10 @@ export default function CountStats({ stats }) {
         <div className="stats-row" ref={ref}>
           {stats.map((s) => (
             <div className="stat" key={s.label}
-              style={{ background: s.bgHex || undefined, color: s.textHex || undefined }}>
-              <b data-count={s.value} data-suffix={s.suffix || ""}>0</b>
-              <span>{s.label}</span>
+              style={{ background: s.bgHex || undefined }}>
+              <b data-count={s.value} data-suffix={s.suffix || ""}
+                style={{ color: s.textHex || undefined }}>0</b>
+              <span style={{ color: s.textHex || undefined }}>{s.label}</span>
             </div>
           ))}
         </div>
