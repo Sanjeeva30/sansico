@@ -1,6 +1,6 @@
 export const revalidate = 30;
 import PageHero from "@/components/PageHero";
-import Image from "next/image";
+import CertLogo from "@/components/CertLogo";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import Strip from "@/components/Strip";
@@ -37,20 +37,8 @@ export default async function Sustainability() {
               <tbody>
                 {s.certifications.map((c) => (
                   <tr key={c.name}>
-                    <td className="nm" style={{ display:"flex", alignItems:"center", gap:14 }}>
-                      <div style={{
-                        width:48, height:48, flexShrink:0,
-                        display:"flex", alignItems:"center", justifyContent:"center",
-                        background: c.logoUrl ? "#fff" : "transparent",
-                        border: c.logoUrl ? "1px solid var(--hair,#E5DFD8)" : "none",
-                        borderRadius:8, padding:6,
-                        boxShadow: c.logoUrl ? "0 1px 2px rgba(23,18,15,0.06)" : "none",
-                      }}>
-                        {c.logoUrl && (
-                          <Image src={c.logoUrl} alt={c.name} width={36} height={36}
-                            style={{ objectFit:"contain", maxWidth:"100%", maxHeight:"100%", width:"auto", height:"auto" }} />
-                        )}
-                      </div>
+                    <td className="nm" style={{ display:"flex", alignItems:"center", gap:16 }}>
+                      <CertLogo src={c.logoUrl} alt={c.name} />
                       {c.name}
                     </td>
                     <td><span className={`badge ${badgeColor[c.category]||""}`}>{c.category}</span></td>
