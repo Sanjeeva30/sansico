@@ -25,7 +25,7 @@ export default {
     { name: "ctaLabel", title: "Header CTA label", type: "string" },
 
     // ── CTA band ──────────────────────────────────────────
-    { name: "ctaBand", title: "CTA band (homepage + bottom of all pages)", type: "object",
+    { name: "ctaBand", title: "CTA band (bottom of all pages)", type: "object",
       fields: [
         { name: "headline", title: "Headline (italic word in |pipes|)", type: "string",
           description: "e.g. Looking for your |China+1| partner in Indonesia?" },
@@ -37,19 +37,44 @@ export default {
       ]
     },
 
-    // ── Sustainability section ───────────────────────────────
-    { name: "susSection", title: "Sustainability page", type: "object",
+    // ── Sustainability / Certifications section ───────────
+    { name: "susSection", title: "Sustainability section (homepage + sustainability page)", type: "object",
       fields: [
-        { name: "pageTitle", title: "Page hero title", type: "string",
-          description: "The main heading on the Sustainability page (italic in |pipes|)",
-          placeholder: "Certified, dated, |verifiable| — sustainability as a discipline, not an adjective." },
-        { name: "pageIntro", title: "Page hero intro", type: "text",
-          description: "Short paragraph below the hero title" },
-        { name: "heading", title: "Heading (italic in |pipes|)", type: "string",
-          description: "e.g. Joy that |gives back| more than it takes." },
-        { name: "body",    title: "Body text", type: "text" },
-        { name: "statValue", title: "Stat value (e.g. 95%)",  type: "string" },
-        { name: "statLabel", title: "Stat label",              type: "string" },
+        // Certification section on homepage
+        { name: "certHeadline", title: "Certification headline", type: "string",
+          description: "Wrap the italic word in |pipes|. e.g. Certified, dated, |verifiable| — sustainability as a discipline, not an adjective." },
+        { name: "certBody", title: "Certification body paragraph", type: "text" },
+        { name: "certBadges", title: "Certification badge chips", type: "array",
+          of: [{ type: "string" }],
+          description: "Short labels shown as pill buttons, e.g. FSC®, FSSC 22000" },
+        // Donut / pie chart
+        { name: "donutCenterValue", title: "Donut chart — centre value (e.g. 95%)", type: "string" },
+        { name: "donutCenterLabel", title: "Donut chart — centre label", type: "string" },
+        { name: "donutSegments", title: "Donut chart segments (must total 100%)", type: "array",
+          of: [{ type: "object", fields: [
+            { name: "label",      title: "Segment label",        type: "string" },
+            { name: "percentage", title: "Percentage (0–100)",   type: "number" },
+            { name: "color",      title: "Colour (CSS variable)", type: "string",
+              options: { list: [
+                { title: "Green (#0D4F31)",  value: "var(--green,#0D4F31)" },
+                { title: "Citrus (#BDDA5F)", value: "var(--citrus,#BDDA5F)" },
+                { title: "Cream/Beige",      value: "var(--hair,#E5DFD8)" },
+                { title: "Crimson (#7A0D20)",value: "var(--crimson,#7A0D20)" },
+                { title: "Navy (#22409E)",   value: "var(--navy,#22409E)" },
+              ]}
+            },
+          ],
+          preview: { select: { title: "label", subtitle: "percentage" },
+            prepare({ title, subtitle }) { return { title: `${title} — ${subtitle}%` }; }
+          }}]
+        },
+        // Sustainability page
+        { name: "pageTitle", title: "Sustainability page — hero title (italic in |pipes|)", type: "string" },
+        { name: "pageIntro", title: "Sustainability page — hero intro", type: "text" },
+        { name: "heading",   title: "Sustainability section heading (italic in |pipes|)", type: "string" },
+        { name: "body",      title: "Sustainability section body", type: "text" },
+        { name: "statValue", title: "Stat value (legacy — use Donut fields above)", type: "string" },
+        { name: "statLabel", title: "Stat label (legacy)", type: "string" },
       ]
     },
 
