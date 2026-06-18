@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import Strip from "@/components/Strip";
 import CountStats from "@/components/CountStats";
 import CtaBand from "@/components/CtaBand";
+import AnimatedDonut from "@/components/AnimatedDonut";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import { getHome, getCapabilities, getMarkets, getCase } from "@/lib/content";
@@ -26,19 +27,12 @@ export default async function Home() {
         { label:"Responsibly sourced", percentage:22, color:"var(--citrus,#BDDA5F)" },
         { label:"In transition",       percentage:16, color:"var(--hair,#E5DFD8)" },
       ];
-  let pct = 0;
-  const conicParts = certSegs.map(s => {
-    const from = pct; pct += s.percentage;
-    return `${s.color} ${from}% ${pct}%`;
-  }).join(",");
-  const donutGradient = `radial-gradient(circle at 50% 50%,#fff 0 38%,transparent 38.5%),conic-gradient(${conicParts})`;
   const cert = {
     headline:   certSection.certHeadline    || null,
     body:       certSection.certBody        || null,
     badges:     certSection.certBadges?.length ? certSection.certBadges : null,
     donutValue: certSection.donutCenterValue || "95%",
     donutLabel: certSection.donutCenterLabel || "Minimum recycled content, gift-bag programme",
-    donutGradient,
   };
 
   return (
@@ -151,14 +145,7 @@ export default async function Home() {
               ))}
             </div>
           </div>
-          <div className="loop" role="img"
-            aria-label={`${cert.donutValue || "95%"} — ${cert.donutLabel || "Minimum recycled content"}`}
-            style={cert.donutGradient ? { background: cert.donutGradient } : undefined}>
-            <div className="core">
-              <b>{cert.donutValue || "95%"}</b>
-              <span>{cert.donutLabel || "Minimum recycled content, gift-bag programme"}</span>
-            </div>
-          </div>
+          <AnimatedDonut segments={certSegs} value={cert.donutValue} label={cert.donutLabel} />
         </div>
       </section>
 
