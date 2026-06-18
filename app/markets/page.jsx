@@ -20,7 +20,9 @@ export default async function Markets() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Markets we serve" title={m.title} intro={m.intro} />
+      <PageHero kicker="Markets we serve" title={m.title} intro={m.intro}
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">
         <div className="wrap rv">
           <div className="card-grid">

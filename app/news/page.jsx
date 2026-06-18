@@ -26,7 +26,9 @@ export default async function News() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="News & Press" title="Updates from Sansico" />
+      <PageHero kicker="News & Press" title="Updates from Sansico"
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">
         <div className="wrap rv">
           {posts.length === 0 ? (

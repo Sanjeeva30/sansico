@@ -18,6 +18,8 @@ export default function Hero({ hero }) {
         <video className="hero-video" autoPlay muted loop playsInline poster={hero.posterUrl || undefined}>
           <source src={hero.videoUrl} type="video/mp4" />
         </video>
+      ) : hero.type === "image" && hero.imageUrl ? (
+        <img className="hero-image" src={hero.imageUrl} alt="" />
       ) : (
         <InkBands />
       )}

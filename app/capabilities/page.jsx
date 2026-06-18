@@ -27,21 +27,23 @@ export default async function Capabilities() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Capabilities" title={caps.title} intro={caps.intro} />
+      <PageHero kicker="Capabilities" title={caps.title} intro={caps.intro}
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
 
       {caps.groups.map((g, i) => (
         <section key={g.slug} id={g.slug} className={`sec ${i % 2 ? "warm" : ""}`}>
           <div className="wrap rv">
 
             {/* ── Strip + full-width heading ── */}
-            <div style={{ marginBottom: 48 }}>
+            <div style={{ marginBottom: 48 }} data-animate>
               <Strip style={{ marginBottom: 20 }} />
               <p className="kicker" style={{ marginBottom: 8 }}>{g.num}</p>
               <h2 style={{ margin: 0, fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)" }}>{g.title}</h2>
             </div>
 
             {/* ── Two-column: body LEFT, bullets RIGHT ── */}
-            <div className="split" style={{ alignItems: "start" }}>
+            <div className="split" style={{ alignItems: "start" }} data-animate data-delay="1">
 
               {/* LEFT — body text */}
               <div className="prose">
@@ -122,7 +124,7 @@ export default async function Capabilities() {
             </div>
             <div className="fac-grid">
               {caps.facilities.map((f, i) => (
-                <div key={f.name} className="fac">
+                <div key={f.name} className="fac" data-animate>
                   {f.logoUrl ? (
                     <div style={{ width:56, height:56, borderRadius:12, overflow:"hidden",
                       background:"#f5f5f5", display:"flex", alignItems:"center", justifyContent:"center" }}>

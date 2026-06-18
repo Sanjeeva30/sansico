@@ -26,6 +26,25 @@ export default {
       description: "Off = nav link disappears and page returns 404"
     },
     { name: "navLabel", title: "Nav label override (leave blank to use page name)", type: "string" },
+    {
+      name: "heroType", title: "Hero background", type: "string",
+      options: { list: ["ink", "image", "video"], layout: "radio" },
+      initialValue: "ink",
+      description: "Ink = the default animated band pattern. Image or video sit behind the page title."
+    },
+    {
+      name: "heroImage", title: "Hero image", type: "image",
+      hidden: ({ document: d }) => d?.heroType !== "image"
+    },
+    {
+      name: "heroVideo", title: "Hero video URL", type: "url",
+      hidden: ({ document: d }) => d?.heroType !== "video",
+      description: "Direct .mp4 URL"
+    },
+    {
+      name: "heroPoster", title: "Hero video poster (shown while video loads)", type: "image",
+      hidden: ({ document: d }) => d?.heroType !== "video"
+    },
     { name: "seoTitle", title: "SEO title", type: "string", description: "Overrides the default. Keep under 60 characters." },
     { name: "seoDescription", title: "SEO description", type: "text", rows: 3, description: "Overrides the default. Keep under 155 characters." },
     { name: "seoImage", title: "Social share image (OG image)", type: "image", description: "1200×630px recommended. Overrides the default." }

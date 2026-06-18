@@ -22,7 +22,9 @@ export default async function Sustainability() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Sustainability & Impact" title={s.title} intro={s.intro} />
+      <PageHero kicker="Sustainability & Impact" title={s.title} intro={s.intro}
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec warm" id="certifications">
         <div className="wrap rv">
           <div className="sec-head">

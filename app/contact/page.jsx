@@ -20,7 +20,9 @@ export default async function Contact() {
     <>
       <Reveal />
       <PageHero kicker="Contact" title="Tell us what you're making"
-        intro="Category, target market, estimated volumes and timeline — our marketing offices in Jakarta and Foshan respond within one business day." />
+        intro="Category, target market, estimated volumes and timeline — our marketing offices in Jakarta and Foshan respond within one business day."
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">
         <div className="wrap split rv">
           <div>

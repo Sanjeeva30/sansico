@@ -22,7 +22,9 @@ export default async function Products() {
     <>
       <Reveal />
       <PageHero kicker="Products" title="Our product portfolio"
-        intro="Every product developed to your specification — FSC-certified materials, global retail standards." />
+        intro="Every product developed to your specification — FSC-certified materials, global retail standards."
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
 
       {/* Category jump nav */}
       {cats.length > 1 && (

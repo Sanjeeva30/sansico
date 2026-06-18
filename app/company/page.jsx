@@ -53,7 +53,9 @@ export default async function Company() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Company" title={c.title} intro={c.intro} />
+      <PageHero kicker="Company" title={c.title} intro={c.intro}
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
 
       {/* ── VISION · MISSION · CULTURE ─────────────────── */}
       <section className="sec warm" style={{ padding:"clamp(32px,4vw,48px) 0" }}>
@@ -64,7 +66,8 @@ export default async function Company() {
             padding:"clamp(24px,3vw,36px)",
             marginBottom:"clamp(16px,2.5vw,24px)"
           })}>
-            <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, lineHeight:1, fontFamily:"Georgia,serif", color:"#7A0D20", margin:"0 0 20px" }}>
+            <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em",
+              textTransform:"uppercase", color:"#7A0D20", margin:"0 0 10px" }}>
               Vision
             </p>
             <p style={{ fontSize:"clamp(1.1rem,2.2vw,1.5rem)", fontWeight:300,
@@ -78,7 +81,8 @@ export default async function Company() {
             gap:"clamp(12px,2vw,20px)" }}>
 
             <div style={borderCard("#fff", { padding:"clamp(20px,3vw,28px)" })}>
-              <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, lineHeight:1, fontFamily:"Georgia,serif", color:"#22409E", margin:"0 0 20px" }}>
+              <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em",
+                textTransform:"uppercase", color:"#22409E", margin:"0 0 10px" }}>
                 Mission
               </p>
               <p style={{ fontSize:"clamp(0.95rem,1.5vw,1.05rem)", lineHeight:1.65,
@@ -88,7 +92,8 @@ export default async function Company() {
             </div>
 
             <div style={borderCard("#fff", { padding:"clamp(20px,3vw,28px)" })}>
-              <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, lineHeight:1, fontFamily:"Georgia,serif", color:"#0D4F31", margin:"0 0 20px" }}>
+              <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em",
+                textTransform:"uppercase", color:"#0D4F31", margin:"0 0 10px" }}>
                 Culture
               </p>
               <p style={{ fontSize:"clamp(0.95rem,1.5vw,1.05rem)", lineHeight:1.65,
@@ -104,7 +109,8 @@ export default async function Company() {
       {c.values?.length > 0 && (
         <section className="sec" style={{ padding:"clamp(28px,4vw,44px) 0" }}>
           <div className="wrap rv">
-            <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, lineHeight:1, fontFamily:"Georgia,serif", color:"#9A8A80", margin:"0 0 20px" }}>
+            <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em",
+              textTransform:"uppercase", color:"#9A8A80", margin:"0 0 20px" }}>
               Our Values
             </p>
             <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
@@ -165,7 +171,8 @@ export default async function Company() {
       {c.timeline?.length > 0 && (
         <section className="sec" style={{ padding:"clamp(28px,4vw,44px) 0" }}>
           <div className="wrap rv">
-            <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, lineHeight:1, fontFamily:"Georgia,serif", color:"#9A8A80", margin:"0 0 20px" }}>
+            <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em",
+              textTransform:"uppercase", color:"#9A8A80", margin:"0 0 20px" }}>
               Our Story
             </p>
             <div style={{ borderLeft:"2px solid #E5DFD8" }}>
@@ -244,7 +251,8 @@ export default async function Company() {
           alignItems:"center", justifyContent:"space-between",
           flexWrap:"wrap", gap:14 }}>
           <div>
-            <p style={{ fontSize:"clamp(1.8rem,3.5vw,2.4rem)", fontWeight:800, lineHeight:1, fontFamily:"Georgia,serif", color:"#9A8A80", margin:"0 0 20px" }}>
+            <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.18em",
+              textTransform:"uppercase", color:"#9A8A80", margin:"0 0 6px" }}>
               Leadership
             </p>
             <p style={{ fontSize:17, fontWeight:300, margin:0, color:"#17120F" }}>

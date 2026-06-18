@@ -1,13 +1,22 @@
 import { InkBands } from "./Hero";
 
-export default function PageHero({ kicker, title, intro }) {
+export default function PageHero({ kicker, title, intro, style,
+  heroType = "ink", heroImageUrl, heroVideoUrl, heroPosterUrl }) {
   return (
-    <section className="phero">
-      <InkBands />
+    <section className="phero" style={style}>
+      {heroType === "video" && heroVideoUrl ? (
+        <video className="phero-media" autoPlay muted loop playsInline poster={heroPosterUrl || undefined}>
+          <source src={heroVideoUrl} type="video/mp4" />
+        </video>
+      ) : heroType === "image" && heroImageUrl ? (
+        <img className="phero-media" src={heroImageUrl} alt="" />
+      ) : (
+        <InkBands />
+      )}
       <div className="wrap">
         <p className="eyebrow" data-animate>{kicker}</p>
         <h1 data-animate data-delay="1">{title}</h1>
-        {intro ? <p>{intro}</p> : null}
+        {intro ? <p data-animate data-delay="2">{intro}</p> : null}
       </div>
     </section>
   );

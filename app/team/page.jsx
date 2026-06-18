@@ -17,7 +17,9 @@ export default async function Team() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Our team" title="The people behind the operations" />
+      <PageHero kicker="Our team" title="The people behind the operations"
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">
         <div className="wrap rv">
           {team.length === 0 ? (

@@ -20,7 +20,9 @@ export default async function Work() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Work" title={w.title} intro={w.intro} />
+      <PageHero kicker="Work" title={w.title} intro={w.intro}
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">
         <div className="wrap rv">
           <div className="card-grid">

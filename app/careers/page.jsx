@@ -20,7 +20,9 @@ export default async function Careers() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Careers" title={c?.title || "Make the things that make moments"} intro={c?.intro || "Register your interest and we'll reach out when a matching role opens."} />
+      <PageHero kicker="Careers" title={c?.title || "Make the things that make moments"} intro={c?.intro || "Register your interest and we'll reach out when a matching role opens."}
+        heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
+        heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       {values.length > 0 && (
         <section className="sec">
           <div className="wrap rv">

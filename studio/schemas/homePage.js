@@ -4,8 +4,9 @@ export default {
   name: "homePage", title: "Home Page", type: "document",
   fields: [
     { name: "heroType",    title: "Hero type",    type: "string", options: { list: ["ink","image","video"], layout: "radio" } },
+    { name: "heroImage",   title: "Hero image",   type: "image",  hidden: ({ document: d }) => d?.heroType !== "image" },
     { name: "heroVideo",   title: "Hero video URL", type: "url",   hidden: ({ document: d }) => d?.heroType !== "video" },
-    { name: "heroPoster",  title: "Hero poster",  type: "image",  hidden: ({ document: d }) => d?.heroType === "ink" },
+    { name: "heroPoster",  title: "Hero video poster (shown while video loads)", type: "image", hidden: ({ document: d }) => d?.heroType !== "video" },
     { name: "heroEyebrow", title: "Hero eyebrow", type: "string" },
     { name: "heroTitle",   title: "Hero title (italic word in |pipes|)", type: "string" },
     { name: "heroSub",     title: "Hero subline", type: "text" },
