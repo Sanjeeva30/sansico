@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const SIZE = 220;
-const STROKE = 34;
+const STROKE = 50;
 const R = (SIZE - STROKE) / 2;
 const C = 2 * Math.PI * R;
 const DRAW_MS = 850;       // how long each segment takes to draw in
@@ -67,7 +67,7 @@ export default function AnimatedDonut({ segments, value, label }) {
 
       <div className={floating ? "donut-core-float" : ""} style={{
         position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
-        textAlign: "center", padding: "0 18%",
+        textAlign: "center", padding: "0 29%",
       }}>
         <div style={{
           opacity: reducedMotion ? 1 : (entered ? 1 : 0),
