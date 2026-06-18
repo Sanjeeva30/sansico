@@ -16,14 +16,16 @@ export default {
       ], layout: "radio" }, initialValue: "article"
     },
     { name: "publishedAt", title: "Published date", type: "datetime" },
-    { name: "coverImage",  title: "Cover image", type: "image", options: { hotspot: true } },
+    { name: "coverImage",  title: "Cover image", type: "image", options: { hotspot: true },
+      description: "1200×675px (16:9) recommended." },
     { name: "excerpt",     title: "Excerpt / teaser", type: "text", rows: 3 },
     { name: "body", title: "Body (for articles)", type: "array",
       of: [{ type: "block",
         styles: [{ title:"Normal",value:"normal" },{ title:"Heading 2",value:"h2" },{ title:"Heading 3",value:"h3" },{ title:"Quote",value:"blockquote" }],
         marks: { decorators: [{ title:"Bold",value:"strong" },{ title:"Italic",value:"em" }] }
       },
-      { type: "image", options: { hotspot: true }, fields: [{ name: "caption", type: "string" }] }],
+      { type: "image", options: { hotspot: true }, description: "1200×800px, landscape recommended.",
+        fields: [{ name: "caption", type: "string" }] }],
       hidden: ({ document: d }) => d?.postType !== "article"
     },
     { name: "externalUrl", title: "External URL", type: "url",

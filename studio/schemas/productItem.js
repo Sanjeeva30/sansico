@@ -12,6 +12,7 @@ export default {
     { name: "description", title: "Description",     type: "text", rows: 4 },
     { name: "photos",      title: "Product photos",  type: "array",
       of: [{ type: "image", options: { hotspot: true },
+        description: "1200×1200px square, or 1200×900px landscape — plain background works best.",
         fields: [{ name: "caption", title: "Caption", type: "string" }] }],
       description: "First photo is the thumbnail. Add multiple for a gallery."
     },

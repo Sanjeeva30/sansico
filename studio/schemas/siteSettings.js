@@ -5,7 +5,7 @@ export default {
   fields: [
     // ── Brand ─────────────────────────────────────────────
     { name: "logo", title: "Brand logo", type: "image",
-      description: "SVG or transparent PNG — replaces the text wordmark when set.",
+      description: "SVG or transparent PNG — replaces the text wordmark when set. Wide format, roughly 800×180px works best; will be scaled down in the header and footer.",
       options: { accept: "image/svg+xml,image/png,image/webp" } },
     { name: "tagline",  title: "Tagline",  type: "string" },
     { name: "mission",  title: "Mission statement (footer)", type: "text" },

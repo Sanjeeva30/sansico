@@ -34,16 +34,18 @@ export default {
     },
     {
       name: "heroImage", title: "Hero image", type: "image",
-      hidden: ({ document: d }) => d?.heroType !== "image"
+      hidden: ({ document: d }) => d?.heroType !== "image",
+      description: "1920×1080px or wider, landscape. Full-width background image behind the page title."
     },
     {
       name: "heroVideo", title: "Hero video URL", type: "url",
       hidden: ({ document: d }) => d?.heroType !== "video",
-      description: "Direct .mp4 URL"
+      description: "Direct .mp4 URL, 1920×1080px (16:9) recommended. Keep the file size reasonable — it autoplays on page load."
     },
     {
       name: "heroPoster", title: "Hero video poster (shown while video loads)", type: "image",
-      hidden: ({ document: d }) => d?.heroType !== "video"
+      hidden: ({ document: d }) => d?.heroType !== "video",
+      description: "Same size as the video, 1920×1080px or wider landscape — shown as a static frame before playback starts."
     },
     { name: "seoTitle", title: "SEO title", type: "string", description: "Overrides the default. Keep under 60 characters." },
     { name: "seoDescription", title: "SEO description", type: "text", rows: 3, description: "Overrides the default. Keep under 155 characters." },

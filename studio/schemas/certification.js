@@ -27,6 +27,7 @@ export default {
       hidden: ({ document: d }) => d?.category !== "custom"
     },
     { name: "logo", title: "Certification body logo / seal", type: "image",
+      description: "Square works best, 400×400px minimum. Logos with very different proportions will be padded to fit a square frame.",
       options: { accept: "image/svg+xml,image/png,image/webp" }
     },
     { name: "certificate", title: "Certificate document (PDF)", type: "file",

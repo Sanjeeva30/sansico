@@ -11,7 +11,8 @@ export default {
     { name: "city",     type: "string", validation: R => R.required() },
     { name: "address",  type: "text" },
     { name: "focus",    title: "Production focus", type: "string" },
-    { name: "photo",    type: "image", options: { hotspot: true } },
+    { name: "photo",    type: "image", options: { hotspot: true },
+      description: "1200×900px or wider, landscape recommended." },
     { name: "capacity", title: "Capacity notes (optional)", type: "text" },
   ],
   preview: {

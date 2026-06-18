@@ -10,6 +10,7 @@ export default {
     { name: "slug",        type: "slug", options: { source: "title", validation: R => R.required() } },
     { name: "kicker",      title: "Kicker (customer / programme)", type: "string", validation: R => R.required() },
     { name: "clientLogo",  title: "Client logo (transparent PNG/SVG)", type: "image",
+      description: "Wide transparent logo, roughly 400×160px works best.",
       options: { accept: "image/svg+xml,image/png,image/webp" } },
     { name: "externalUrl", title: "External link (optional)", type: "url",
       description: "Links to client website or press article — opens in new tab." },
@@ -20,7 +21,8 @@ export default {
         { name: "value", type: "string" }, { name: "label", type: "string" }
       ], preview: { select: { title: "value", subtitle: "label" } } }]
     },
-    { name: "image",       title: "Hero image",   type: "image" },
+    { name: "image",       title: "Hero image",   type: "image",
+      description: "1600×1000px or wider, landscape recommended." },
     { name: "publishedAt", title: "Published",    type: "datetime" },
   ],
   preview: {

@@ -33,9 +33,11 @@ export default {
       }]
     },
     { name: "points",  title: "Bullet points", type: "array", of: [{ type: "string" }] },
-    { name: "image",   title: "Primary image", type: "image" },
+    { name: "image",   title: "Primary image", type: "image",
+      description: "1600×1000px or wider, landscape recommended." },
     { name: "gallery", title: "Image gallery", type: "array",
       of: [{ type: "image", options: { hotspot: true },
+        description: "1200×800px, landscape recommended.",
         fields: [{ name: "caption", title: "Caption", type: "string" }] }]
     },
     { name: "subServices", title: "Sub-services", type: "array",
@@ -52,7 +54,8 @@ export default {
     { name: "customerLogos", title: "Customer logos", type: "array",
       of: [{ type: "object", fields: [
         { name: "name", type: "string" },
-        { name: "logo", type: "image", options: { accept: "image/svg+xml,image/png,image/webp" } }
+        { name: "logo", type: "image", description: "Wide transparent logo, roughly 400×160px works best.",
+          options: { accept: "image/svg+xml,image/png,image/webp" } }
       ], preview: { select: { title: "name", media: "logo" } } }]
     },
   ],

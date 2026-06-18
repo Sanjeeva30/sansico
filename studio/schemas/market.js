@@ -13,7 +13,8 @@ export default {
     { name: "tag",   title: "One-line tag (shown on index card)", type: "string" },
 
     // ── Page content ──────────────────────────────────────
-    { name: "image", title: "Hero image (full-width)", type: "image", options: { hotspot: true } },
+    { name: "image", title: "Hero image (full-width)", type: "image", options: { hotspot: true },
+      description: "1920×1080px or wider, landscape. Full-width background image." },
     { name: "body",  title: "Body (plain text, quick entry)", type: "text" },
     { name: "richBody", title: "Rich body (overrides plain when set)", type: "array",
       of: [{ type: "block",
