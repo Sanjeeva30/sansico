@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { getStyled } from "@/lib/styledText";
 
 export default function CountStats({ stats }) {
   const ref = useRef(null);
@@ -43,14 +44,20 @@ export default function CountStats({ stats }) {
     <section aria-label="Group at a glance">
       <div className="wrap">
         <div className="stats-row" ref={ref}>
-          {stats.map((s) => (
-            <div className="stat" key={s.label}
-              style={{ background: s.bgHex || undefined }}>
-              <b data-count={s.value} data-suffix={s.suffix || ""}
-                style={{ color: s.textHex || undefined }}>0</b>
-              <span style={{ color: s.textHex || undefined }}>{s.label}</span>
-            </div>
-          ))}
+          {stats.map((s, i) => {
+            const label = getStyled(s.label);
+            // A specific label color (from the new styled field) wins over the whole-card text color;
+            // otherwise fall back to the card's textHex exactly as before.
+            const labelColor = label.style.color || s.textHex || undefined;
+            return (
+              <div className="stat" key={label.text || i}
+                style={{ background: s.bgHex || undefined }}>
+                <b data-count={s.value} data-suffix={s.suffix || ""}
+                  style={{ color: s.textHex || undefined }}>0</b>
+                <span style={{ color: labelColor, fontSize: label.style.fontSize || undefined }}>{label.text}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

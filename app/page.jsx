@@ -4,6 +4,8 @@ import Image from "next/image";
 import Hero from "@/components/Hero";
 import Strip from "@/components/Strip";
 import CountStats from "@/components/CountStats";
+import StyledText from "@/components/StyledText";
+import { getStyled } from "@/lib/styledText";
 import CtaBand from "@/components/CtaBand";
 import AnimatedDonut from "@/components/AnimatedDonut";
 import Reveal from "@/components/Reveal";
@@ -15,7 +17,8 @@ export default async function Home() {
   const caps = await getCapabilities();
   const markets = await getMarkets();
   const featured = await getCase(home.featuredWork);
-  const [m1, m2, m3] = home.manifesto.title.split("|");
+  const manifestoTitle = getStyled(home.manifesto.title);
+  const [m1, m2, m3] = (manifestoTitle.text || "").split("|");
   const arts = ["art-design", "art-make", "art-deliver"];
 
   // Certification / donut section — CMS-driven with fallbacks
@@ -43,8 +46,8 @@ export default async function Home() {
       <section className="sec manifesto">
         <div className="wrap rv">
           <Strip />
-          <h2>{m1}<span className="joy">{m2}</span>{m3}</h2>
-          <p>{home.manifesto.body}</p>
+          <h2 style={manifestoTitle.style}>{m1}<span className="joy">{m2}</span>{m3}</h2>
+          <StyledText as="p" value={home.manifesto.body} />
         </div>
       </section>
 
@@ -58,13 +61,14 @@ export default async function Home() {
           </div>
           <div className="logo-wall" role="list">
             {home.customers.map((c) => {
-              const name = c.name || c;
+              const nameStyled = getStyled(c.name);
+              const name = nameStyled.text || (typeof c === "string" ? c : "");
               const logoUrl = c.logoUrl || null;
               return (
                 <div role="listitem" key={name} title={name}>
                   {logoUrl
                     ? <Image src={logoUrl} alt={name} width={120} height={40} style={{ objectFit: "contain", filter: "grayscale(1)", opacity: 0.7 }} />
-                    : <span>{name}</span>
+                    : <span style={nameStyled.style}>{name}</span>
                   }
                 </div>
               );

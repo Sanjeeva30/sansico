@@ -14,6 +14,8 @@ import facility        from "./facility";
 import person          from "./person";
 import whyIndonesia from "./whyIndonesia";
 import newsPost        from "./newsPost";
+import styledString    from "./styledString";
+import styledText      from "./styledText";
 
 export const schemaTypes = [
   siteSettings, navItem, pageSettings,
@@ -22,4 +24,5 @@ export const schemaTypes = [
   productCategory, productItem,
   caseStudy, certification, facility,
   person, newsPost, whyIndonesia,
+  styledString, styledText,
 ];

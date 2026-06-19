@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Arrow from "./Arrow";
+import StyledText from "./StyledText";
+import { getStyled } from "@/lib/styledText";
 
 export function InkBands() {
   return (
@@ -11,7 +13,8 @@ export function InkBands() {
 }
 
 export default function Hero({ hero }) {
-  const [a, b, c] = (hero.title || "").split("|");
+  const title = getStyled(hero.title);
+  const [a, b, c] = (title.text || "").split("|");
   return (
     <section className="hero" aria-label="Sansico Group">
       {hero.type === "video" && hero.videoUrl ? (
@@ -25,9 +28,9 @@ export default function Hero({ hero }) {
       )}
       <div className="grain" aria-hidden="true" />
       <div className="hero-inner">
-        <p className="eyebrow">{hero.eyebrow}</p>
-        <h1>{a}<em>{b}</em>{c}</h1>
-        <p className="sub">{hero.sub}</p>
+        <StyledText as="p" className="eyebrow" value={hero.eyebrow} />
+        <h1 style={title.style}>{a}<em>{b}</em>{c}</h1>
+        <StyledText as="p" className="sub" value={hero.sub} />
         <Link className="btn btn-light" href={hero.primary.href}>{hero.primary.label} <Arrow /></Link>
         <Link className="btn btn-ghost" href={hero.secondary.href}>{hero.secondary.label}</Link>
       </div>
