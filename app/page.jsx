@@ -30,12 +30,20 @@ export default async function Home() {
         { label:"Responsibly sourced", percentage:22, color:"var(--citrus,#BDDA5F)" },
         { label:"In transition",       percentage:16, color:"var(--hair,#E5DFD8)" },
       ];
+  const certHeadline   = getStyled(certSection.certHeadline);
+  const certBody       = getStyled(certSection.certBody);
+  const donutValue     = getStyled(certSection.donutCenterValue || "95%");
+  const donutLabel     = getStyled(certSection.donutCenterLabel || "Minimum recycled content, gift-bag programme");
   const cert = {
-    headline:   certSection.certHeadline    || null,
-    body:       certSection.certBody        || null,
-    badges:     certSection.certBadges?.length ? certSection.certBadges : null,
-    donutValue: certSection.donutCenterValue || "95%",
-    donutLabel: certSection.donutCenterLabel || "Minimum recycled content, gift-bag programme",
+    headline:   certHeadline.text || null,
+    headlineStyle: certHeadline.style,
+    body:       certBody.text || null,
+    bodyStyle:  certBody.style,
+    badges:     certSection.certBadges?.length ? certSection.certBadges.map(getStyled) : null,
+    donutValue: donutValue.text,
+    donutValueStyle: donutValue.style,
+    donutLabel: donutLabel.text,
+    donutLabelStyle: donutLabel.style,
   };
 
   return (
@@ -138,18 +146,19 @@ export default async function Home() {
           <div>
             <Strip order={[3,5,1,2,4]} style={{ marginBottom: 30 }} />
             {cert.headline ? (
-              <h2 dangerouslySetInnerHTML={{ __html: cert.headline.replace(/\|([^|]+)\|/g, '<em>$1</em>') }} />
+              <h2 style={cert.headlineStyle} dangerouslySetInnerHTML={{ __html: cert.headline.replace(/\|([^|]+)\|/g, '<em>$1</em>') }} />
             ) : (
               <h2>Certified, dated, <em>verifiable</em> — sustainability as a discipline, not an adjective.</h2>
             )}
-            <p className="body">{cert.body || "Every certification we hold is published with its scope and holding entity, and backed by a downloadable certificate. Forestry to food safety, security to social compliance — verification is the point."}</p>
+            <p className="body" style={cert.bodyStyle}>{cert.body || "Every certification we hold is published with its scope and holding entity, and backed by a downloadable certificate. Forestry to food safety, security to social compliance — verification is the point."}</p>
             <div className="chips">
-              {(cert.badges || ["FSC®","FSSC 22000","ISO 17025","C-TPAT / SCAN","Higg Index","amfori BEPI","HERproject","NEST"]).map((c) => (
-                <Link className="chip" href="/sustainability#certifications" key={c}>{c}</Link>
+              {(cert.badges || ["FSC®","FSSC 22000","ISO 17025","C-TPAT / SCAN","Higg Index","amfori BEPI","HERproject","NEST"].map(t => ({text:t, style:{}}))).map((b) => (
+                <Link className="chip" href="/sustainability#certifications" key={b.text} style={b.style}>{b.text}</Link>
               ))}
             </div>
           </div>
-          <AnimatedDonut segments={certSegs} value={cert.donutValue} label={cert.donutLabel} />
+          <AnimatedDonut segments={certSegs} value={cert.donutValue} valueStyle={cert.donutValueStyle}
+            label={cert.donutLabel} labelStyle={cert.donutLabelStyle} />
         </div>
       </section>
 

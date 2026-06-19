@@ -5,6 +5,8 @@ import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import Strip from "@/components/Strip";
 import { getSustainability, getPageSettings, getPageSeo } from "@/lib/content";
+import { getStyled } from "@/lib/styledText";
+import StyledText from "@/components/StyledText";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata() {
@@ -23,6 +25,7 @@ export default async function Sustainability() {
     <>
       <Reveal />
       <PageHero kicker="Sustainability & Impact" title={s.title} intro={s.intro}
+        titleStyle={s.titleStyle} introStyle={s.introStyle}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec warm" id="certifications">
@@ -63,15 +66,17 @@ export default async function Sustainability() {
         <div className="wrap sus-grid rv">
           <div>
             <Strip order={[3,5,1,2,4]} style={{ marginBottom:30 }} />
-            <h2>{s.susSection?.heading ? (
-              <>
-                {s.susSection.heading.split("|")[0]}
-                <em style={{color:"var(--green)"}}>{s.susSection.heading.split("|")[1]}</em>
-                {s.susSection.heading.split("|")[2]}
-              </>
-            ) : <>Joy that <em>gives back</em> more than it takes.</>}
-            </h2>
-            <p className="body">{s.susSection?.body || "Through HERproject we invest in the women who power our workforce; through NEST and our FSC rattan supply chain we bring audited, fair artisan livelihoods into global retail — measured, certified and improving every year."}</p>
+            {(() => {
+              const heading = getStyled(s.susSection?.heading);
+              const [h1, h2, h3] = (heading.text || "").split("|");
+              return heading.text ? (
+                <h2 style={heading.style}>
+                  {h1}<em style={{color:"var(--green)"}}>{h2}</em>{h3}
+                </h2>
+              ) : <h2>Joy that <em>gives back</em> more than it takes.</h2>;
+            })()}
+            <StyledText as="p" className="body" value={s.susSection?.body}
+              fallback={<p className="body">Through HERproject we invest in the women who power our workforce; through NEST and our FSC rattan supply chain we bring audited, fair artisan livelihoods into global retail — measured, certified and improving every year.</p>} />
           </div>
           <div className="loop" role="img" aria-label={`${s.stat.value} ${s.stat.label}`}>
             <div className="core"><b>{s.stat.value}</b><span>{s.stat.label}</span></div>

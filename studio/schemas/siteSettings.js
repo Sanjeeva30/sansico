@@ -7,8 +7,8 @@ export default {
     { name: "logo", title: "Brand logo", type: "image",
       description: "SVG or transparent PNG — replaces the text wordmark when set. Wide format, roughly 800×180px works best; will be scaled down in the header and footer.",
       options: { accept: "image/svg+xml,image/png,image/webp" } },
-    { name: "tagline",  title: "Tagline",  type: "string" },
-    { name: "mission",  title: "Mission statement (footer)", type: "text" },
+    { name: "tagline",  title: "Tagline",  type: "styledString" },
+    { name: "mission",  title: "Mission statement (footer)", type: "styledText" },
 
     // ── Typography ────────────────────────────────────────
     { name: "headingFont", title: "Heading font", type: "string",
@@ -22,17 +22,17 @@ export default {
 
     // ── Navigation ────────────────────────────────────────
     { name: "nav", title: "Header navigation", type: "array", of: [{ type: "navItem" }] },
-    { name: "ctaLabel", title: "Header CTA label", type: "string" },
+    { name: "ctaLabel", title: "Header CTA label", type: "styledString" },
 
     // ── CTA band ──────────────────────────────────────────
     { name: "ctaBand", title: "CTA band (bottom of all pages)", type: "object",
       fields: [
-        { name: "headline", title: "Headline (italic word in |pipes|)", type: "string",
+        { name: "headline", title: "Headline (italic word in |pipes|)", type: "styledString",
           description: "e.g. Looking for your |China+1| partner in Indonesia?" },
-        { name: "subline",  title: "Subline", type: "text" },
-        { name: "btn1Label",title: "Button 1 label", type: "string" },
+        { name: "subline",  title: "Subline", type: "styledText" },
+        { name: "btn1Label",title: "Button 1 label", type: "styledString" },
         { name: "btn1Href", title: "Button 1 URL",   type: "string" },
-        { name: "btn2Label",title: "Button 2 label", type: "string" },
+        { name: "btn2Label",title: "Button 2 label", type: "styledString" },
         { name: "btn2Href", title: "Button 2 URL",   type: "string" },
       ]
     },
@@ -41,18 +41,18 @@ export default {
     { name: "susSection", title: "Sustainability section (homepage + sustainability page)", type: "object",
       fields: [
         // Certification section on homepage
-        { name: "certHeadline", title: "Certification headline", type: "string",
+        { name: "certHeadline", title: "Certification headline", type: "styledString",
           description: "Wrap the italic word in |pipes|. e.g. Certified, dated, |verifiable| — sustainability as a discipline, not an adjective." },
-        { name: "certBody", title: "Certification body paragraph", type: "text" },
+        { name: "certBody", title: "Certification body paragraph", type: "styledText" },
         { name: "certBadges", title: "Certification badge chips", type: "array",
-          of: [{ type: "string" }],
+          of: [{ type: "styledString" }],
           description: "Short labels shown as pill buttons, e.g. FSC®, FSSC 22000" },
         // Donut / pie chart
-        { name: "donutCenterValue", title: "Donut chart — centre value (e.g. 95%)", type: "string" },
-        { name: "donutCenterLabel", title: "Donut chart — centre label", type: "string" },
+        { name: "donutCenterValue", title: "Donut chart — centre value (e.g. 95%)", type: "styledString" },
+        { name: "donutCenterLabel", title: "Donut chart — centre label", type: "styledString" },
         { name: "donutSegments", title: "Donut chart segments (must total 100%)", type: "array",
           of: [{ type: "object", fields: [
-            { name: "label",      title: "Segment label",        type: "string" },
+            { name: "label",      title: "Segment label",        type: "styledString" },
             { name: "percentage", title: "Percentage (0–100)",   type: "number" },
             { name: "color",      title: "Colour (CSS variable)", type: "string",
               options: { list: [
@@ -64,15 +64,15 @@ export default {
               ]}
             },
           ],
-          preview: { select: { title: "label", subtitle: "percentage" },
+          preview: { select: { title: "label.text", subtitle: "percentage" },
             prepare({ title, subtitle }) { return { title: `${title} — ${subtitle}%` }; }
           }}]
         },
         // Sustainability page
-        { name: "pageTitle", title: "Sustainability page — hero title (italic in |pipes|)", type: "string" },
-        { name: "pageIntro", title: "Sustainability page — hero intro", type: "text" },
-        { name: "heading",   title: "Sustainability section heading (italic in |pipes|)", type: "string" },
-        { name: "body",      title: "Sustainability section body", type: "text" },
+        { name: "pageTitle", title: "Sustainability page — hero title (italic in |pipes|)", type: "styledString" },
+        { name: "pageIntro", title: "Sustainability page — hero intro", type: "styledText" },
+        { name: "heading",   title: "Sustainability section heading (italic in |pipes|)", type: "styledString" },
+        { name: "body",      title: "Sustainability section body", type: "styledText" },
         { name: "statValue", title: "Stat value (legacy — use Donut fields above)", type: "string" },
         { name: "statLabel", title: "Stat label (legacy)", type: "string" },
       ]

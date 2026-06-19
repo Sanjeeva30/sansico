@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import StyledText from "./StyledText";
 
 export default function Footer({ site }) {
   return (
@@ -15,7 +16,7 @@ export default function Footer({ site }) {
                     <span className="s7">O</span><em>Group</em></>
               }
             </div>
-            <p className="blurb">{site.mission}</p>
+            <StyledText as="p" className="blurb" value={site.mission} />
           </div>
           <div>
             <h6>Company</h6>

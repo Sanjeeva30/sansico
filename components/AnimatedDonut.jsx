@@ -8,7 +8,7 @@ const C = 2 * Math.PI * R;
 const DRAW_MS = 850;       // how long each segment takes to draw in
 const STAGGER_MS = 320;    // delay step between segments starting
 
-export default function AnimatedDonut({ segments, value, label }) {
+export default function AnimatedDonut({ segments, value, label, valueStyle, labelStyle }) {
   const wrapRef = useRef(null);
   const [entered, setEntered] = useState(false);
   const [floating, setFloating] = useState(false);
@@ -74,8 +74,8 @@ export default function AnimatedDonut({ segments, value, label }) {
           transform: reducedMotion ? "none" : (entered ? "scale(1) translateY(0)" : "scale(0.8) translateY(8px)"),
           transition: reducedMotion ? "none" : `opacity 0.6s ease ${(segments.length - 1) * STAGGER_MS + 300}ms, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${(segments.length - 1) * STAGGER_MS + 300}ms`
         }}>
-          <b style={{ display:"block", fontSize:"clamp(40px,5vw,64px)", fontWeight:800, letterSpacing:"-.03em", color:"var(--green)" }}>{value}</b>
-          <span style={{ fontSize:12, letterSpacing:".1em", textTransform:"uppercase", color:"var(--ink-soft)", fontWeight:700, lineHeight:1.5 }}>{label}</span>
+          <b style={{ display:"block", fontSize:"clamp(40px,5vw,64px)", fontWeight:800, letterSpacing:"-.03em", color:"var(--green)", ...valueStyle }}>{value}</b>
+          <span style={{ fontSize:12, letterSpacing:".1em", textTransform:"uppercase", color:"var(--ink-soft)", fontWeight:700, lineHeight:1.5, ...labelStyle }}>{label}</span>
         </div>
       </div>
 
