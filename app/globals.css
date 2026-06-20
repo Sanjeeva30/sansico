@@ -89,10 +89,10 @@ button{font:inherit}
 
 /* Big floating section label — Vision/Mission/Culture/Values style headers */
 .label-big{
+  font-family:var(--font-serif),Georgia,serif;
   font-size:clamp(28px,4.2vw,42px);
-  font-weight:800;
+  font-weight:400;
   letter-spacing:-0.01em;
-  text-transform:uppercase;
   display:inline-block;
   line-height:1;
 }
