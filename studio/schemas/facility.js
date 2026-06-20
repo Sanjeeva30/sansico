@@ -7,16 +7,16 @@ export default {
     orderRankField({ type: "facility" }),
     { name: "logo", title: "Facility logo / thumbnail", type: "image", description: "Square logo for the capabilities page thumbnail. Replaces the abbreviation badge. 200×200px recommended.", options: { accept: "image/svg+xml,image/png,image/webp" } },
     { name: "visible",  title: "Visible on site", type: "boolean", initialValue: true },
-    { name: "name",     type: "string", validation: R => R.required() },
-    { name: "city",     type: "string", validation: R => R.required() },
-    { name: "address",  type: "text" },
-    { name: "focus",    title: "Production focus", type: "string" },
+    { name: "name",     type: "styledString", validation: R => R.required() },
+    { name: "city",     type: "styledString", validation: R => R.required() },
+    { name: "address",  type: "styledText" },
+    { name: "focus",    title: "Production focus", type: "styledString" },
     { name: "photo",    type: "image", options: { hotspot: true },
       description: "1200×900px or wider, landscape recommended." },
-    { name: "capacity", title: "Capacity notes (optional)", type: "text" },
+    { name: "capacity", title: "Capacity notes (optional)", type: "styledText" },
   ],
   preview: {
-    select: { title: "name", subtitle: "city", media: "photo", visible: "visible" },
+    select: { title: "name.text", subtitle: "city.text", media: "photo", visible: "visible" },
     prepare({ title, subtitle, media, visible }) {
       return { title, subtitle: `${subtitle || ""} ${visible === false ? "· 🔴 Hidden" : ""}`, media };
     }

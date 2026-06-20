@@ -4,6 +4,7 @@ import Image from "next/image";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import { getTeam, getPageSettings, getPageSeo } from "@/lib/content";
+import { getStyled } from "@/lib/styledText";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata() {
@@ -26,23 +27,27 @@ export default async function Team() {
             <p style={{ opacity:0.5 }}>Team profiles coming soon — add them in the Studio under Team.</p>
           ) : (
             <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))", gap:32 }}>
-              {team.map((p) => (
-                <div key={p.name} style={{ display:"flex", flexDirection:"column", gap:14 }}>
+              {team.map((p, pi) => {
+                const pName = getStyled(p.name);
+                const pRole = getStyled(p.role);
+                const pBio = getStyled(p.bio);
+                return (
+                <div key={pi} style={{ display:"flex", flexDirection:"column", gap:14 }}>
                   {p.photoUrl ? (
                     <div style={{ position:"relative", width:"100%", aspectRatio:"1/1", overflow:"hidden", borderRadius:8 }}>
-  <Image src={p.photoUrl} alt={p.name} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
+  <Image src={p.photoUrl} alt={pName.text} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
 </div>
                   ) : (
                     <div style={{ width:"100%", aspectRatio:"1/1", background:"var(--hair)", borderRadius:8,
                       display:"flex", alignItems:"center", justifyContent:"center",
                       fontSize:40, fontWeight:700, color:"var(--ink)", opacity:0.2 }}>
-                      {p.name?.[0]}
+                      {pName.text?.[0]}
                     </div>
                   )}
                   <div>
-                    <b style={{ display:"block", fontSize:17 }}>{p.name}</b>
-                    <span style={{ display:"block", color:"var(--crimson)", fontSize:13.5, fontWeight:500, marginBottom:8 }}>{p.role}</span>
-                    {p.bio && <p style={{ margin:0, fontSize:14, lineHeight:1.65, opacity:0.8 }}>{p.bio}</p>}
+                    <b style={{ display:"block", fontSize:17, ...pName.style }}>{pName.text}</b>
+                    <span style={{ display:"block", color:"var(--crimson)", fontSize:13.5, fontWeight:500, marginBottom:8, ...pRole.style }}>{pRole.text}</span>
+                    {pBio.text && <p style={{ margin:0, fontSize:14, lineHeight:1.65, opacity:0.8, ...pBio.style }}>{pBio.text}</p>}
                     {p.linkedin && (
                       <a href={p.linkedin} target="_blank" rel="noopener"
                         style={{ display:"inline-block", marginTop:10, fontSize:13, color:"var(--navy)", fontWeight:600 }}>
@@ -51,7 +56,8 @@ export default async function Team() {
                     )}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

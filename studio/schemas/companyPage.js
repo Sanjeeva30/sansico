@@ -3,15 +3,16 @@ import { orderRankField } from "@sanity/orderable-document-list";
 export default {
   name: "companyPage", title: "Company Page", type: "document",
   fields: [
-    { name: "title",  title: "Page title",  type: "string",
+    { name: "title",  title: "Page title",  type: "styledString",
       initialValue: "An Indonesian group built for the world's shelves" },
-    { name: "intro",  title: "Intro paragraph", type: "text" },
-    { name: "mission", title: "Mission statement", type: "string" },
-    { name: "vision", title: "Vision statement", type: "text",
+    { name: "intro",  title: "Intro paragraph", type: "styledText" },
+    { name: "mission", title: "Mission statement", type: "styledString",
+      description: "One-sentence mission — shown prominently above Vision & Culture" },
+    { name: "vision", title: "Vision statement", type: "styledText",
       description: "Shown in the Vision card" },
-    { name: "culture",title: "Culture statement", type: "text",
+    { name: "culture",title: "Culture statement", type: "styledText",
       description: "Shown in the Culture card" },
-    { name: "overviewTitle", title: "Overview heading", type: "string" },
+    { name: "overviewTitle", title: "Overview heading", type: "styledString" },
     { name: "overviewBody", title: "Overview body (rich text)", type: "array",
       of: [{ type: "block",
         styles: [{ title:"Normal",value:"normal" },{ title:"Heading 3",value:"h3" }],
@@ -33,16 +34,16 @@ export default {
     },
     { name: "timeline", title: "Company timeline", type: "array",
       of: [{ type: "object", fields: [
-        { name: "year",        title: "Year",        type: "string", validation: R => R.required() },
-        { name: "event",       title: "Event title", type: "string", validation: R => R.required() },
-        { name: "description", title: "Description", type: "text" }
-      ], preview: { select: { title: "year", subtitle: "event" } } }]
+        { name: "year",        title: "Year",        type: "styledString", validation: R => R.required() },
+        { name: "event",       title: "Event title", type: "styledString", validation: R => R.required() },
+        { name: "description", title: "Description", type: "styledText" }
+      ], preview: { select: { title: "year.text", subtitle: "event.text" } } }]
     },
     { name: "values", title: "Our values", type: "array",
       of: [{ type: "object", fields: [
-        { name: "title", type: "string", validation: R => R.required() },
-        { name: "body",  type: "text" }
-      ], preview: { select: { title: "title" } } }]
+        { name: "title", type: "styledString", validation: R => R.required() },
+        { name: "body",  type: "styledText" }
+      ], preview: { select: { title: "title.text" } } }]
     },
   ]
 };

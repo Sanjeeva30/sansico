@@ -16,7 +16,7 @@ export default {
   fields: [
     orderRankField({ type: "certification" }),
     { name: "visible", title: "Visible on site", type: "boolean", initialValue: true },
-    { name: "name", title: "Certification name", type: "string",
+    { name: "name", title: "Certification name", type: "styledString",
       validation: R => R.required() },
     { name: "category", title: "Category", type: "string",
       options: { list: STANDARD_CATEGORIES, layout: "dropdown" },
@@ -33,14 +33,14 @@ export default {
     { name: "certificate", title: "Certificate document (PDF)", type: "file",
       options: { accept: "application/pdf" }
     },
-    { name: "scope",        title: "Scope",               type: "text" },
-    { name: "entity",       title: "Holding entity",      type: "string" },
+    { name: "scope",        title: "Scope",               type: "styledText" },
+    { name: "entity",       title: "Holding entity",      type: "styledString" },
     { name: "issued",       title: "Issue date",          type: "date" },
     { name: "expires",      title: "Expiry date",         type: "date" },
-    { name: "registration", title: "Registration number", type: "string" },
+    { name: "registration", title: "Registration number", type: "styledString" },
   ],
   preview: {
-    select: { title: "name", subtitle: "entity", media: "logo", visible: "visible" },
+    select: { title: "name.text", subtitle: "entity.text", media: "logo", visible: "visible" },
     prepare({ title, subtitle, media, visible }) {
       return { title, subtitle: `${subtitle || ""} ${visible === false ? "· 🔴 Hidden" : ""}`, media };
     }

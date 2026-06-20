@@ -4,6 +4,7 @@ import Image from "next/image";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import { getNews, getNewsPost } from "@/lib/content";
+import { getStyled } from "@/lib/styledText";
 import { notFound, redirect } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -13,7 +14,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const p = await getNewsPost(params.slug);
   if (!p) return {};
-  return { title: p.title, description: p.excerpt };
+  const title = getStyled(p.title);
+  const excerpt = getStyled(p.excerpt);
+  return { title: title.text, description: excerpt.text };
 }
 
 function RichBlocks({ blocks }) {
@@ -44,16 +47,20 @@ export default async function NewsPostPage({ params }) {
   const p = await getNewsPost(params.slug);
   if (!p) notFound();
   if (p.postType !== "article" && p.externalUrl) redirect(p.externalUrl);
+  const title = getStyled(p.title);
+  const excerpt = getStyled(p.excerpt);
+  const authorName = getStyled(p.author?.name);
 
   return (
     <>
       <Reveal />
-      <PageHero kicker="News & Press" title={p.title} intro={p.excerpt} />
+      <PageHero kicker="News & Press" title={title.text} intro={excerpt.text}
+        titleStyle={title.style} introStyle={excerpt.style} />
       {p.coverUrl && (
         <section className="sec" style={{ paddingBottom:0 }}>
           <div className="wrap rv">
             <div style={{ position:"relative", width:"100%", height:480, overflow:"hidden", borderRadius:8 }}>
-  <Image src={p.coverUrl} alt={p.title} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
+  <Image src={p.coverUrl} alt={title.text} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit:"cover" }} />
 </div>
           </div>
         </section>
@@ -61,12 +68,12 @@ export default async function NewsPostPage({ params }) {
       <section className="sec">
         <div className="wrap rv" style={{ maxWidth:760 }}>
           <div style={{ display:"flex", gap:16, alignItems:"center", marginBottom:32, fontSize:13.5, opacity:0.6 }}>
-            {p.author?.name && (
+            {authorName.text && (
               <span style={{ display:"flex", alignItems:"center", gap:8 }}>
                 {p.author.photoUrl && (
-                  <Image src={p.author.photoUrl} alt={p.author.name} width={28} height={28} style={{ objectFit: "contain" }} />
+                  <Image src={p.author.photoUrl} alt={authorName.text} width={28} height={28} style={{ objectFit: "contain" }} />
                 )}
-                {p.author.name}
+                {authorName.text}
               </span>
             )}
             <span>{fmtDate(p.publishedAt)}</span>

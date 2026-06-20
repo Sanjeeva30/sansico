@@ -142,19 +142,23 @@ export default async function Capabilities() {
               <p className="lede">Ten facilities, Indonesia &amp; China</p>
             </div>
             <div className="fac-grid">
-              {caps.facilities.map((f, i) => (
-                <div key={f.name} className="fac" data-animate>
+              {caps.facilities.map((f, i) => {
+                const fName = getStyled(f.name);
+                const fCity = getStyled(f.city);
+                const fFocus = getStyled(f.focus);
+                return (
+                <div key={i} className="fac" data-animate>
                   {f.logoUrl ? (
                     <div style={{ width:56, height:56, borderRadius:12, overflow:"hidden",
                       background:"#f5f5f5", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                      <Image src={f.logoUrl} alt={f.name} width={48} height={48}
+                      <Image src={f.logoUrl} alt={fName.text} width={48} height={48}
                         style={{ objectFit:"contain" }} />
                     </div>
                   ) : f.photoUrl ? (
                     <div style={{ position:"relative", width:56, height:56, borderRadius:12,
                       overflow:"hidden", flexShrink:0 }}>
                       <Image src={`${f.photoUrl}?w=112&h=112&fit=crop&auto=format`}
-                        alt={f.name} fill sizes="56px" style={{ objectFit:"cover" }} />
+                        alt={fName.text} fill sizes="56px" style={{ objectFit:"cover" }} />
                     </div>
                   ) : (
                     <span className="mark"
@@ -163,12 +167,13 @@ export default async function Capabilities() {
                     </span>
                   )}
                   <div>
-                    <b>{f.name}</b>
-                    <span>{f.city}</span>
-                    {f.focus && <span className="focus">{f.focus}</span>}
+                    <b style={fName.style}>{fName.text}</b>
+                    <span style={fCity.style}>{fCity.text}</span>
+                    {fFocus.text && <span className="focus" style={fFocus.style}>{fFocus.text}</span>}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

@@ -5,6 +5,7 @@ import PageHero from "@/components/PageHero";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import { getCompany, getPageSettings, getPageSeo } from "@/lib/content";
+import { getStyled } from "@/lib/styledText";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata() {
@@ -49,11 +50,18 @@ export default async function Company() {
     getCompany(), getPageSettings("company"),
   ]);
   if (!settings.visible) notFound();
+  const title = getStyled(c.title);
+  const intro = getStyled(c.intro);
+  const vision = getStyled(c.vision);
+  const mission = getStyled(c.mission);
+  const culture = getStyled(c.culture);
+  const overviewTitle = getStyled(c.overviewTitle);
 
   return (
     <>
       <Reveal />
-      <PageHero kicker="Company" title={c.title} intro={c.intro}
+      <PageHero kicker="Company" title={title.text} intro={intro.text}
+        titleStyle={title.style} introStyle={intro.style}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
 
@@ -70,8 +78,8 @@ export default async function Company() {
               Vision
             </p>
             <p style={{ fontSize:"clamp(1.1rem,2.2vw,1.5rem)", fontWeight:300,
-              lineHeight:1.55, margin:0, color:"#17120F", maxWidth:640 }}>
-              {c.vision}
+              lineHeight:1.55, margin:0, color:"#17120F", maxWidth:640, ...vision.style }}>
+              {vision.text}
             </p>
           </div>
 
@@ -84,8 +92,8 @@ export default async function Company() {
                 Mission
               </p>
               <p style={{ fontSize:"clamp(0.95rem,1.5vw,1.05rem)", lineHeight:1.65,
-                margin:0, color:"#17120F", fontWeight:300 }}>
-                {c.mission}
+                margin:0, color:"#17120F", fontWeight:300, ...mission.style }}>
+                {mission.text}
               </p>
             </div>
 
@@ -94,8 +102,8 @@ export default async function Company() {
                 Culture
               </p>
               <p style={{ fontSize:"clamp(0.95rem,1.5vw,1.05rem)", lineHeight:1.65,
-                margin:0, color:"#17120F", fontWeight:300 }}>
-                {c.culture}
+                margin:0, color:"#17120F", fontWeight:300, ...culture.style }}>
+                {culture.text}
               </p>
             </div>
           </div>
@@ -112,10 +120,12 @@ export default async function Company() {
             <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
               {c.values.map((v, i) => {
                 const color = SANSI[i] || "#7A0D20";
-                const initial = v.title?.[0] || "";
-                const rest    = v.title?.slice(1) || "";
+                const vTitle = getStyled(v.title);
+                const vBody = getStyled(v.body);
+                const initial = vTitle.text?.[0] || "";
+                const rest    = vTitle.text?.slice(1) || "";
                 return (
-                  <div key={v.title} style={card({
+                  <div key={i} style={card({
                     display:"flex",
                     alignItems:"center",
                     gap:"clamp(16px,2.5vw,28px)",
@@ -137,12 +147,12 @@ export default async function Company() {
                       gap:"clamp(8px,1.5vw,16px)", flexWrap:"wrap" }}>
                       <h3 style={{ margin:0,
                         fontSize:"clamp(0.9rem,1.4vw,1.05rem)",
-                        fontWeight:700, lineHeight:1.2, flexShrink:0 }}>
+                        fontWeight:700, lineHeight:1.2, flexShrink:0, ...vTitle.style }}>
                         <span style={{ color }}>{initial}</span>{rest}
                       </h3>
                       <p style={{ margin:0, fontSize:14,
-                        lineHeight:1.5, color:"#6B5F58" }}>
-                        {v.body}
+                        lineHeight:1.5, color:"#6B5F58", ...vBody.style }}>
+                        {vBody.text}
                       </p>
                     </div>
                   </div>
@@ -157,7 +167,7 @@ export default async function Company() {
       {c.overviewBody?.length > 0 && (
         <section className="sec warm" style={{ padding:"clamp(28px,4vw,44px) 0" }}>
           <div className="wrap split rv">
-            <div>{c.overviewTitle && <h2>{c.overviewTitle}</h2>}</div>
+            <div>{overviewTitle.text && <h2 style={overviewTitle.style}>{overviewTitle.text}</h2>}</div>
             <div className="prose"><RichText blocks={c.overviewBody} /></div>
           </div>
         </section>
@@ -172,25 +182,30 @@ export default async function Company() {
               Our Story
             </p>
             <div style={{ borderLeft:"2px solid #E5DFD8" }}>
-              {c.timeline.map((t) => (
-                <div key={t.year} style={{ display:"flex", gap:20,
+              {c.timeline.map((t, ti) => {
+                const tYear = getStyled(t.year);
+                const tEvent = getStyled(t.event);
+                const tDesc = getStyled(t.description);
+                return (
+                <div key={ti} style={{ display:"flex", gap:20,
                   paddingBottom:18, paddingLeft:20, position:"relative" }}>
                   <div style={{ position:"absolute", left:-5, top:4,
                     width:8, height:8, borderRadius:"50%",
                     background:"#7A0D20" }} />
                   <b style={{ color:"#7A0D20", minWidth:44,
-                    flexShrink:0, fontSize:13 }}>{t.year}</b>
+                    flexShrink:0, fontSize:13, ...tYear.style }}>{tYear.text}</b>
                   <div>
                     <b style={{ display:"block", marginBottom:2,
-                      fontSize:14 }}>{t.event}</b>
-                    {t.description && (
-                      <p style={{ margin:0, opacity:.7, fontSize:13 }}>
-                        {t.description}
+                      fontSize:14, ...tEvent.style }}>{tEvent.text}</b>
+                    {tDesc.text && (
+                      <p style={{ margin:0, opacity:.7, fontSize:13, ...tDesc.style }}>
+                        {tDesc.text}
                       </p>
                     )}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -214,28 +229,33 @@ export default async function Company() {
               </Link>
             </div>
             <div className="fac-grid">
-              {c.facilities.map((f) => (
-                <div key={f.name} className="fac" style={{ flexDirection:"column" }}>
+              {c.facilities.map((f, fi) => {
+                const fName = getStyled(f.name);
+                const fCity = getStyled(f.city);
+                const fFocus = getStyled(f.focus);
+                return (
+                <div key={fi} className="fac" style={{ flexDirection:"column" }}>
                   {f.photoUrl && (
                     <div style={{ position:"relative", width:"100%",
                       aspectRatio:"16/9", overflow:"hidden",
                       borderRadius:6, marginBottom:10 }}>
                       <Image
                         src={`${f.photoUrl}?w=600&h=338&fit=crop&auto=format`}
-                        alt={f.name} fill
+                        alt={fName.text} fill
                         sizes="(max-width:768px)100vw,50vw"
                         style={{ objectFit:"cover" }} />
                     </div>
                   )}
-                  <b style={{ fontSize:13 }}>{f.name}</b>
-                  <span style={{ fontSize:12, color:"#9A8A80" }}>{f.city}</span>
-                  {f.focus && (
-                    <span className="focus" style={{ fontSize:11 }}>
-                      {f.focus}
+                  <b style={{ fontSize:13, ...fName.style }}>{fName.text}</b>
+                  <span style={{ fontSize:12, color:"#9A8A80", ...fCity.style }}>{fCity.text}</span>
+                  {fFocus.text && (
+                    <span className="focus" style={{ fontSize:11, ...fFocus.style }}>
+                      {fFocus.text}
                     </span>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

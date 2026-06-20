@@ -3,6 +3,7 @@ import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import InterestForm from "@/components/InterestForm";
 import { getCareers, getPageSettings, getPageSeo } from "@/lib/content";
+import { getStyled } from "@/lib/styledText";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata() {
@@ -15,21 +16,28 @@ export async function generateMetadata() {
 export default async function Careers() {
   const [c, settings] = await Promise.all([getCareers(), getPageSettings("careers")]);
   if (!settings.visible) notFound();
+  const title = getStyled(c?.title) || {};
+  const intro = getStyled(c?.intro) || {};
   const values = c?.values || [];
-  const roles = c?.openRoles?.map(r => r.title) || ["Engineering & Production","Design & Creative","Quality & Laboratory","Supply Chain & Logistics","Commercial & Marketing","Finance, IT & Corporate"];
+  const roles = c?.openRoles?.map(r => getStyled(r.title).text).filter(Boolean) || ["Engineering & Production","Design & Creative","Quality & Laboratory","Supply Chain & Logistics","Commercial & Marketing","Finance, IT & Corporate"];
   return (
     <>
       <Reveal />
-      <PageHero kicker="Careers" title={c?.title || "Make the things that make moments"} intro={c?.intro || "Register your interest and we'll reach out when a matching role opens."}
+      <PageHero kicker="Careers" title={title.text || "Make the things that make moments"} intro={intro.text || "Register your interest and we'll reach out when a matching role opens."}
+        titleStyle={title.style} introStyle={intro.style}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       {values.length > 0 && (
         <section className="sec">
           <div className="wrap rv">
             <div className="card-grid">
-              {values.map((v) => (
-                <div className="card" data-animate key={v.title}><h3>{v.title}</h3><p>{v.body}</p></div>
-              ))}
+              {values.map((v, vi) => {
+                const vTitle = getStyled(v.title);
+                const vBody = getStyled(v.body);
+                return (
+                  <div className="card" data-animate key={vi}><h3 style={vTitle.style}>{vTitle.text}</h3><p style={vBody.style}>{vBody.text}</p></div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -42,18 +50,23 @@ export default async function Careers() {
               <p className="lede">Current opportunities across our operations</p>
             </div>
             <div className="card-grid">
-              {c.openRoles.map((r) => (
-                <div className="card" data-animate key={r.title}>
-                  <h3>{r.title}</h3>
-                  <span className="kicker">{r.location}</span>
-                  {r.description && <p style={{ marginTop:10 }}>{r.description}</p>}
-                  {r.applyEmail && (
-                    <p style={{ marginTop:14 }}>
-                      <a className="link-d" href={`mailto:${r.applyEmail}?subject=Application: ${r.title}`}>Apply →</a>
-                    </p>
-                  )}
-                </div>
-              ))}
+              {c.openRoles.map((r, ri) => {
+                const rTitle = getStyled(r.title);
+                const rLocation = getStyled(r.location);
+                const rDesc = getStyled(r.description);
+                return (
+                  <div className="card" data-animate key={ri}>
+                    <h3 style={rTitle.style}>{rTitle.text}</h3>
+                    <span className="kicker" style={rLocation.style}>{rLocation.text}</span>
+                    {rDesc.text && <p style={{ marginTop:10, ...rDesc.style }}>{rDesc.text}</p>}
+                    {r.applyEmail && (
+                      <p style={{ marginTop:14 }}>
+                        <a className="link-d" href={`mailto:${r.applyEmail}?subject=Application: ${rTitle.text}`}>Apply →</a>
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

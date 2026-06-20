@@ -40,15 +40,19 @@ export default async function Sustainability() {
                 <tr><th>Certification</th><th>Category</th><th>Scope</th><th>Entity</th><th>Certificate</th></tr>
               </thead>
               <tbody>
-                {s.certifications.map((c, i) => (
-                  <tr key={c.name}>
+                {s.certifications.map((c, i) => {
+                  const name = getStyled(c.name);
+                  const scope = getStyled(c.scope);
+                  const entity = getStyled(c.entity);
+                  return (
+                  <tr key={i}>
                     <td className="nm" style={{ display:"flex", alignItems:"center", gap:16 }}>
-                      <CertLogo src={c.logoUrl} alt={c.name} index={i} />
-                      {c.name}
+                      <CertLogo src={c.logoUrl} alt={name.text} index={i} />
+                      <span style={name.style}>{name.text}</span>
                     </td>
                     <td><span className={`badge ${badgeColor[c.category]||""}`}>{c.category}</span></td>
-                    <td>{c.scope}</td>
-                    <td>{c.entity}</td>
+                    <td style={scope.style}>{scope.text}</td>
+                    <td style={entity.style}>{entity.text}</td>
                     <td>
                       {c.certificateUrl
                         ? <a className="link-d" href={c.certificateUrl} target="_blank" rel="noopener">Download PDF</a>
@@ -56,7 +60,8 @@ export default async function Sustainability() {
                       }
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
