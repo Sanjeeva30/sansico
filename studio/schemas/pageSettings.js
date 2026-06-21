@@ -49,7 +49,11 @@ export default {
     },
     { name: "seoTitle", title: "SEO title", type: "string", description: "Overrides the default. Keep under 60 characters." },
     { name: "seoDescription", title: "SEO description", type: "text", rows: 3, description: "Overrides the default. Keep under 155 characters." },
-    { name: "seoImage", title: "Social share image (OG image)", type: "image", description: "1200×630px recommended. Overrides the default." }
+    { name: "seoImage", title: "Social share image (OG image)", type: "image", description: "1200×630px recommended. Overrides the default." },
+    { name: "pageTitle", title: "Page hero heading", type: "styledString",
+      description: "The big heading shown at the top of this page." },
+    { name: "pageIntro", title: "Page hero intro", type: "styledText",
+      description: "The short paragraph shown under the heading." },
   ],
   preview: {
     select: { title: "label", visible: "visible" },

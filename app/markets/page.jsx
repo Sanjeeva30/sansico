@@ -21,7 +21,8 @@ export default async function Markets() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Markets we serve" title={m.title} intro={m.intro}
+      <PageHero kicker="Markets we serve" title={getStyled(settings.pageTitle).text || m.title} intro={getStyled(settings.pageIntro).text || m.intro}
+        titleStyle={getStyled(settings.pageTitle).style} introStyle={getStyled(settings.pageIntro).style}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">

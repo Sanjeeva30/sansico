@@ -18,7 +18,9 @@ export default async function Team() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Our team" title="The people behind the operations"
+      <PageHero kicker="Our team" title={getStyled(settings.pageTitle).text || "The people behind the operations"}
+        intro={getStyled(settings.pageIntro).text}
+        titleStyle={getStyled(settings.pageTitle).style} introStyle={getStyled(settings.pageIntro).style}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">

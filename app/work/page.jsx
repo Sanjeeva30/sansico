@@ -21,7 +21,8 @@ export default async function Work() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Work" title={w.title} intro={w.intro}
+      <PageHero kicker="Work" title={getStyled(settings.pageTitle).text || w.title} intro={getStyled(settings.pageIntro).text || w.intro}
+        titleStyle={getStyled(settings.pageTitle).style} introStyle={getStyled(settings.pageIntro).style}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">

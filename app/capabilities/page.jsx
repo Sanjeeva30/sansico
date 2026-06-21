@@ -29,7 +29,8 @@ export default async function Capabilities() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Capabilities" title={caps.title} intro={caps.intro}
+      <PageHero kicker="Capabilities" title={getStyled(settings.pageTitle).text || caps.title} intro={getStyled(settings.pageIntro).text || caps.intro}
+        titleStyle={getStyled(settings.pageTitle).style} introStyle={getStyled(settings.pageIntro).style}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
 

@@ -27,7 +27,9 @@ export default async function News() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="News & Press" title="Updates from Sansico"
+      <PageHero kicker="News & Press" title={getStyled(settings.pageTitle).text || "Updates from Sansico"}
+        intro={getStyled(settings.pageIntro).text}
+        titleStyle={getStyled(settings.pageTitle).style} introStyle={getStyled(settings.pageIntro).style}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
       <section className="sec">

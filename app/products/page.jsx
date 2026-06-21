@@ -22,8 +22,9 @@ export default async function Products() {
   return (
     <>
       <Reveal />
-      <PageHero kicker="Products" title="Our product portfolio"
-        intro="Every product developed to your specification — FSC-certified materials, global retail standards."
+      <PageHero kicker="Products" title={getStyled(settings.pageTitle).text || "Our product portfolio"}
+        intro={getStyled(settings.pageIntro).text || "Every product developed to your specification — FSC-certified materials, global retail standards."}
+        titleStyle={getStyled(settings.pageTitle).style} introStyle={getStyled(settings.pageIntro).style}
         heroType={settings.heroType} heroImageUrl={settings.heroImageUrl}
         heroVideoUrl={settings.heroVideoUrl} heroPosterUrl={settings.heroPosterUrl} />
 
